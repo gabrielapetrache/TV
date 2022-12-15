@@ -1,6 +1,7 @@
 package input;
 
-import java.util.ArrayList;
+import filters.Filters;
+import users.Credentials;
 
 public class Actions {
     private String type;
@@ -13,6 +14,9 @@ public class Actions {
     private String startsWith;
     private Filters filters;
 
+    /**
+     * Default constructor
+     */
     public Actions() {
     }
 

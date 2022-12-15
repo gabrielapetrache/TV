@@ -1,11 +1,12 @@
-package input;
-
-import java.util.ArrayList;
+package filters;
 
 public class Filters {
     private Sort sort;
     private Contains contains;
 
+    /**
+     * Default constructor
+     */
     public Filters() {
     }
 

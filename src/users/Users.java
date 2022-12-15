@@ -1,4 +1,6 @@
-package input;
+package users;
+
+import input.Movies;
 
 import java.util.ArrayList;
 
@@ -11,6 +13,9 @@ public class Users {
     private ArrayList<Movies> likedMovies;
     private ArrayList<Movies> ratedMovies;
 
+    /**
+     * Default constructor
+     */
     public Users() {
     }
 
@@ -128,7 +133,7 @@ public class Users {
 
     @Override
     public String toString() {
-        return "UsersInput{"
+        return "Users{"
                 +  "users="
                 + credentials
                 + ", tokens="

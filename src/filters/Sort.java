@@ -1,9 +1,12 @@
-package input;
+package filters;
 
 public class Sort {
     private String rating;
     private String duration;
 
+    /**
+     * Default constructor
+     */
     public Sort() {
     }
 

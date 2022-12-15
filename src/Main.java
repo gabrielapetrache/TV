@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import input.Input;
+import platform.Platform;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,8 +57,11 @@ public class Main {
         Input input = objectMapper.readValue(new File("checker/resources/in/" + filePath1), Input.class);
 
         //System.out.println(input.getUsers());
-        //System.out.println(input.getActions());
+
         ArrayNode output = objectMapper.createArrayNode();
+
+        Platform platform = new Platform(input, output);
+        platform.stream();
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(filePath2), output);

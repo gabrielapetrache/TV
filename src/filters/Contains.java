@@ -1,4 +1,4 @@
-package input;
+package filters;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,9 @@ public class Contains {
     private ArrayList<String> actors;
     private ArrayList<String> genre;
 
-
+    /**
+     * Default constructor
+     */
     public Contains() {
     }
 

@@ -1,4 +1,4 @@
-package input;
+package users;
 
 public class Credentials {
     private String name;
@@ -7,6 +7,9 @@ public class Credentials {
     private String country;
     private int balance;
 
+    /**
+     * Default constructor
+     */
     public Credentials() {
     }
 
