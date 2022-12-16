@@ -1,16 +1,43 @@
 package users;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 public class Credentials {
     private String name;
     private String password;
     private String accountType;
     private String country;
-    private int balance;
+    private String balance;
 
     /**
      * Default constructor
      */
     public Credentials() {
+    }
+
+    public Credentials(final String name, final String password, final String accountType,
+                       final String country, final String balance) {
+        this.name = name;
+        this.password = password;
+        this.accountType = accountType;
+        this.country = country;
+        this.balance = balance;
+    }
+    /**
+     * Method that writes the user's credentials in a JSON format
+     */
+    public ObjectNode printCredentials() {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode credentials = mapper.createObjectNode();
+
+        credentials.put("name", name);
+        credentials.put("password", password);
+        credentials.put("accountType", accountType);
+        credentials.put("country", country);
+        credentials.put("balance", balance);
+
+        return credentials;
     }
 
     /**
@@ -81,7 +108,7 @@ public class Credentials {
      * getter for balance
      * @return balance
      */
-    public int getBalance() {
+    public String getBalance() {
         return balance;
     }
 
@@ -89,7 +116,7 @@ public class Credentials {
      * setter for balance
      * @param balance
      */
-    public void setBalance(int balance) {
+    public void setBalance(String balance) {
         this.balance = balance;
     }
 

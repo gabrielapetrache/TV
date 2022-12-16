@@ -1,13 +1,16 @@
 package users;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import input.Movies;
 
 import java.util.ArrayList;
 
 public class Users {
     private Credentials credentials;
-    private int tokens;
-    private int numFreePremiumMovies;
+    private int tokensCount = 0;
+    private int numFreePremiumMovies = 15;
     private ArrayList<Movies> purchasedMovies;
     private ArrayList<Movies> watchedMovies;
     private ArrayList<Movies> likedMovies;
@@ -19,16 +22,84 @@ public class Users {
     public Users() {
     }
 
+    public Users(final Credentials credentials) {
+        this.credentials = credentials;
+        this.purchasedMovies = new ArrayList<>();
+        this.watchedMovies = new ArrayList<>();
+        this.likedMovies = new ArrayList<>();
+        this.ratedMovies = new ArrayList<>();
+    }
+
     /**
-     * getter for users
-     * @return users
+     * Method that writes the user's data in a JSON format
+     * @return the user's data in a JSON format
+     */
+    public ObjectNode printUser() {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode user = mapper.createObjectNode();
+        ArrayNode empty = mapper.createArrayNode();
+
+        user.set("credentials", credentials.printCredentials());
+        user.put("tokensCount", tokensCount);
+        user.put("numFreePremiumMovies", numFreePremiumMovies);
+
+        if (purchasedMovies == null) {
+            user.set("purchasedMovies", empty);
+        } else {
+            ArrayNode list = mapper.createArrayNode();
+            for (Movies movie : purchasedMovies) {
+                ObjectNode node = movie.printMovie();
+                list.add(node);
+            }
+            user.set("purchasedMovies", list);
+        }
+
+        if (watchedMovies == null) {
+            user.set("watchedMovies", empty);
+        } else {
+            ArrayNode list = mapper.createArrayNode();
+            for (Movies movie : watchedMovies) {
+                ObjectNode node = movie.printMovie();
+                list.add(node);
+            }
+            user.set("watchedMovies", list);
+        }
+
+        if (likedMovies == null) {
+            user.set("likedMovies", empty);
+        } else {
+            ArrayNode list = mapper.createArrayNode();
+            for (Movies movie : likedMovies) {
+                ObjectNode node = movie.printMovie();
+                list.add(node);
+            }
+            user.set("likedMovies", list);
+        }
+
+        if (ratedMovies == null) {
+            user.set("ratedMovies", empty);
+        } else {
+            ArrayNode list = mapper.createArrayNode();
+            for (Movies movie : ratedMovies) {
+                ObjectNode node = movie.printMovie();
+                list.add(node);
+            }
+            user.set("ratedMovies", list);
+        }
+
+        return user;
+    }
+
+    /**
+     * getter for credentials
+     * @return credentials
      */
     public Credentials getCredentials() {
         return credentials;
     }
 
     /**
-     * setter for users
+     * setter for credentials
      * @param users
      */
     public void setCredentials(Credentials users) {
@@ -39,16 +110,16 @@ public class Users {
      * getter for tokens
      * @return tokens
      */
-    public int getTokens() {
-        return tokens;
+    public int getTokensCount() {
+        return tokensCount;
     }
 
     /**
      * setter for tokens
      * @param tokens
      */
-    public void setTokens(int tokens) {
-        this.tokens = tokens;
+    public void setTokensCount(int tokens) {
+        this.tokensCount = tokens;
     }
 
     /**
@@ -136,8 +207,8 @@ public class Users {
         return "Users{"
                 +  "users="
                 + credentials
-                + ", tokens="
-                + tokens
+                + ", tokensCount="
+                + tokensCount
                 + ", numFreePremiumMovies="
                 + numFreePremiumMovies
                 + ", purchasedMovies="

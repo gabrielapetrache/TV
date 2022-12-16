@@ -1,5 +1,6 @@
 package input;
 
+import pages.Actions;
 import users.Users;
 
 import java.util.ArrayList;

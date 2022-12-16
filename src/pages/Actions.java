@@ -1,4 +1,4 @@
-package input;
+package pages;
 
 import filters.Filters;
 import users.Credentials;
