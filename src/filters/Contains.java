@@ -1,5 +1,7 @@
 package filters;
 
+import input.Movies;
+
 import java.util.ArrayList;
 
 public class Contains {
@@ -10,6 +12,23 @@ public class Contains {
      * Default constructor
      */
     public Contains() {
+    }
+
+    /**
+     * Method for filtering movies by actors and genre
+     */
+    public void execute(ArrayList<Movies> list) {
+        if (actors != null) {
+            for (String actor : actors) {
+                list.removeIf(movie -> !movie.getActors().contains(actor));
+            }
+        }
+
+        if (genre != null) {
+            for (String genre : genre) {
+                list.removeIf(movie -> !movie.getGenres().contains(genre));
+            }
+        }
     }
 
     /**

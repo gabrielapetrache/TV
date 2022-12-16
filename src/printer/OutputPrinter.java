@@ -21,10 +21,11 @@ public class OutputPrinter {
         this.currentUser = curr;
     }
 
-    public ObjectNode printError(Users curr) {
+    public ObjectNode printError(Users curr, ArrayList<Movies> currentMovieList) {
 
         ObjectNode node = mapper.createObjectNode();
         String empty = null;
+        this.currentMovieList = currentMovieList;
 
         node.put("error", "Error");
         node.set("currentMoviesList", printMovieList());
@@ -36,8 +37,9 @@ public class OutputPrinter {
         return node;
     }
 
-    public ObjectNode printSuccess(Users curr) {
+    public ObjectNode printSuccess(Users curr, ArrayList<Movies> currentMovieList) {
         currentUser = curr;
+        this.currentMovieList = currentMovieList;
         ObjectNode node = mapper.createObjectNode();
         String empty = null;
 
