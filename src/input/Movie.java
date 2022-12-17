@@ -106,7 +106,7 @@ public class Movie implements Comparable<Movie> {
 
     /**
      * setter for name
-     * @param name
+     * @param name name
      */
     public void setName(String name) {
         this.name = name;
@@ -122,7 +122,7 @@ public class Movie implements Comparable<Movie> {
 
     /**
      * setter for year
-     * @param year
+     * @param year year
      */
     public void setYear(int year) {
         this.year = year;

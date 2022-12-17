@@ -1,8 +1,5 @@
 package pages;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import printer.OutputPrinter;
-
 import static pages.PageTypes.*;
 
 public class ChangePage {

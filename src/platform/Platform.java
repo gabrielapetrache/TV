@@ -11,7 +11,6 @@ import users.Credentials;
 import users.User;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import static pages.PageTypes.*;
 
@@ -36,7 +35,7 @@ public class Platform {
     }
 
     public void stream(final ArrayNode output) {
-        OutputPrinter printer = new OutputPrinter(output, currentUser, currentMovieList);
+        OutputPrinter printer = new OutputPrinter(output, currentUser);
         currentMovieList = new ArrayList<>();
 
         for (Actions currentAction : actions) {
@@ -44,7 +43,7 @@ public class Platform {
             ChangePage changePage = new ChangePage();
 
             switch (type) {
-                case CHANGE:
+                case CHANGE -> {
                     String newPage = currentAction.getPage();
                      /* logout is a separate case from the others,
                          because it also resets the current user */
@@ -58,34 +57,36 @@ public class Platform {
                             output.add(printer.printError());
                             break;
                         }
-                            /* the page was successfully changed */
-                            currentPage = newPage;
+                        /* the page was successfully changed */
+                        currentPage = newPage;
                             /* if the user accessed the movie page,
                             he will see all the movies available for his country */
-                            if (currentPage.equals(MOVIES)) {
-                                currentMovieList = new ArrayList<>();
-                                addMoviesAvailable();
-                                output.add(printer.printSuccess(currentUser, currentMovieList));
-                                break;
-                            }
-                            if (currentPage.equals(DETAILS)) {
-                                String movieTitle = currentAction.getMovie();
+                        if (currentPage.equals(MOVIES)) {
+                            currentMovieList = new ArrayList<>();
+                            addMoviesAvailable();
+                            output.add(printer.printSuccess(currentUser, currentMovieList));
+                            break;
+                        }
+                        if (currentPage.equals(DETAILS)) {
+                            String movieTitle = currentAction.getMovie();
+                            int error = 1;
+                            filteredMovieList = new ArrayList<>(currentMovieList);
 
-                                int error = 1;
-                                filteredMovieList = new ArrayList<>();
-                                for (Movie movie : currentMovieList) {
-                                    if (movie.getName().equals(movieTitle)) {
-                                        error = 0;
-                                        filteredMovieList.add(movie);
-                                        break;
-                                    }
-                                }
-                                if (error == 1) {
-                                    output.add(printer.printError());
+                            for (Movie movie : currentMovieList) {
+                                if (!movie.getName().equals(movieTitle)) {
+                                    filteredMovieList.remove(movie);
                                 } else {
-                                    output.add(printer.printSuccess(currentUser, filteredMovieList));
+                                    error = 0;
                                 }
                             }
+                            if (error == 1) {
+                                addMoviesAvailable();
+                                currentPage = MOVIES;
+                                output.add(printer.printError());
+                            } else {
+                                output.add(printer.printSuccess(currentUser, filteredMovieList));
+                            }
+                        }
                     } else {
                         if (currentUser == null) {
                             output.add(printer.printError());
@@ -96,8 +97,8 @@ public class Platform {
                         currentUser = null;
                         currentPage = HOMEPAGEONE;
                     }
-                    break;
-                case ON:
+                }
+                case ON -> {
                     String feature = currentAction.getFeature();
                     switch (feature) {
                         case LOGIN:
@@ -158,18 +159,16 @@ public class Platform {
                         case SEARCH:
                             if (currentPage.equals(MOVIES)) {
                                 String startsWith = currentAction.getStartsWith();
-
                                 ArrayList<Movie> copyMovieList = new ArrayList<>(currentMovieList);
 
                                 for (Movie movie : copyMovieList) {
                                     for (String ban : movie.getCountriesBanned()) {
                                         if (ban.equals(currentUser.getCredentials().getCountry())
-                                                || !movie.getName().startsWith(startsWith) ) {
+                                                || !movie.getName().startsWith(startsWith)) {
                                             currentMovieList.remove(movie);
                                         }
                                     }
                                 }
-                                filteredMovieList = new ArrayList<>(currentMovieList);
                                 output.add(printer.printSuccess(currentUser, currentMovieList));
                             } else {
                                 /* if the current page is not movies, the error is printed */
@@ -182,8 +181,7 @@ public class Platform {
                                 if (currentMovieList.isEmpty()) {
                                     addMoviesAvailable();
                                 }
-                                filter.filter(currentMovieList);
-                                filteredMovieList = new ArrayList<>(currentMovieList);
+                                currentMovieList = filter.filter(currentMovieList);
                                 output.add(printer.printSuccess(currentUser, currentMovieList));
                             } else {
                                 /* if the current page is not movies, the error is printed */
@@ -216,8 +214,7 @@ public class Platform {
                             break;
                         case PURCHASE:
                             if (currentPage.equals(DETAILS)) {
-                                String movieTitle = currentAction.getMovie();
-                                int error = 0;
+                                int error;
                                 if (filteredMovieList.isEmpty()) {
                                     output.add(printer.printError());
                                     break;
@@ -239,7 +236,6 @@ public class Platform {
                             break;
                         case WATCH:
                             if (currentPage.equals(DETAILS)) {
-                                String movieTitle = currentAction.getMovie();
                                 if (filteredMovieList.isEmpty()) {
                                     output.add(printer.printError());
                                     break;
@@ -262,7 +258,6 @@ public class Platform {
                             }
                         case LIKE:
                             if (currentPage.equals(DETAILS)) {
-                                String movieTitle = currentAction.getMovie();
                                 if (filteredMovieList.isEmpty()) {
                                     output.add(printer.printError());
                                     break;
@@ -281,7 +276,6 @@ public class Platform {
                             break;
                         case RATE:
                             if (currentPage.equals(DETAILS)) {
-                                String movieTitle = currentAction.getMovie();
                                 if (filteredMovieList.isEmpty()) {
                                     output.add(printer.printError());
                                     break;
@@ -301,8 +295,9 @@ public class Platform {
                             break;
                         default:
                     }
-                    break;
-                default:
+                }
+                default -> {
+                }
             }
         }
     }

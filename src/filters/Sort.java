@@ -48,7 +48,7 @@ public class Sort implements FilterStrategy {
 
     /**
      * setter for rating
-     * @param rating
+     * @param rating rating
      */
     public void setRating(String rating) {
         this.rating = rating;
@@ -56,7 +56,7 @@ public class Sort implements FilterStrategy {
 
     /**
      * getter for duration
-     * @return duration
+     * @return duration of the movie
      */
     public String getDuration() {
         return duration;
@@ -64,7 +64,7 @@ public class Sort implements FilterStrategy {
 
     /**
      * setter for duration
-     * @param duration
+     * @param duration of the movie
      */
     public void setDuration(String duration) {
         this.duration = duration;

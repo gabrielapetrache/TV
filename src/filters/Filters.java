@@ -18,13 +18,14 @@ public class Filters {
      * Method for filtering movies by strategy
      * @param list current list of movies
      */
-    public void filter(ArrayList<Movie> list) {
+    public ArrayList<Movie> filter(ArrayList<Movie> list) {
         if (sort != null) {
             sort.execute(list);
         }
         if (contains != null) {
             contains.execute(list);
         }
+        return list;
     }
 
     /**

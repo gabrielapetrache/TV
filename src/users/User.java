@@ -127,6 +127,9 @@ public class User {
         if (movie == null) {
             return -1;
         }
+        if (rating < 0 || rating > 5) {
+            return -1;
+        }
         if (purchasedMovies.contains(movie) && watchedMovies.contains(movie)) {
             movie.rateMovie(rating);
             ratedMovies.add(movie);

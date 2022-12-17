@@ -9,14 +9,12 @@ import users.User;
 import java.util.ArrayList;
 
 public class OutputPrinter {
-    private ArrayNode output;
+    private final ArrayNode output;
     private User currentUser;
-    private ArrayList<Movie> currentMovieList;
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
-    public OutputPrinter(ArrayNode output, User curr, ArrayList<Movie> list) {
+    public OutputPrinter(ArrayNode output, User curr) {
         this.output = output;
-        this.currentMovieList = list;
         this.currentUser = curr;
     }
 
@@ -58,8 +56,4 @@ public class OutputPrinter {
         }
         return list;
     }
-
-
-
-
 }
