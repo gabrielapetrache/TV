@@ -208,9 +208,9 @@ public class User {
 
     /**
      * setter for credentials
-     * @param users
+     * @param users credentials
      */
-    public void setCredentials(Credentials users) {
+    public void setCredentials(final Credentials users) {
         this.credentials = users;
     }
 
@@ -224,9 +224,9 @@ public class User {
 
     /**
      * setter for tokens
-     * @param tokens
+     * @param tokens to set
      */
-    public void setTokensCount(int tokens) {
+    public void setTokensCount(final int tokens) {
         this.tokensCount = tokens;
     }
 
@@ -240,9 +240,9 @@ public class User {
 
     /**
      * setter for numFreePremiumMovies
-     * @param numFreePremiumMovies
+     * @param numFreePremiumMovies to set
      */
-    public void setNumFreePremiumMovies(int numFreePremiumMovies) {
+    public void setNumFreePremiumMovies(final int numFreePremiumMovies) {
         this.numFreePremiumMovies = numFreePremiumMovies;
     }
 
@@ -256,9 +256,9 @@ public class User {
 
     /**
      * setter for purchasedMovies
-     * @param purchasedMovies
+     * @param purchasedMovies to set
      */
-    public void setPurchasedMovies(ArrayList<Movie> purchasedMovies) {
+    public void setPurchasedMovies(final ArrayList<Movie> purchasedMovies) {
         this.purchasedMovies = purchasedMovies;
     }
 
@@ -272,9 +272,9 @@ public class User {
 
     /**
      * setter for watchedMovies
-     * @param watchedMovies
+     * @param watchedMovies to set
      */
-    public void setWatchedMovies(ArrayList<Movie> watchedMovies) {
+    public void setWatchedMovies(final ArrayList<Movie> watchedMovies) {
         this.watchedMovies = watchedMovies;
     }
 
@@ -288,9 +288,9 @@ public class User {
 
     /**
      * setter for likedMovies
-     * @param likedMovies
+     * @param likedMovies to set
      */
-    public void setLikedMovies(ArrayList<Movie> likedMovies) {
+    public void setLikedMovies(final ArrayList<Movie> likedMovies) {
         this.likedMovies = likedMovies;
     }
 
@@ -304,12 +304,16 @@ public class User {
 
     /**
      * setter for ratedMovies
-     * @param ratedMovies
+     * @param ratedMovies to set
      */
-    public void setRatedMovies(ArrayList<Movie> ratedMovies) {
+    public void setRatedMovies(final ArrayList<Movie> ratedMovies) {
         this.ratedMovies = ratedMovies;
     }
 
+    /**
+     * prints the user's data
+     * @return the user's data
+     */
     @Override
     public String toString() {
         return "Users{"

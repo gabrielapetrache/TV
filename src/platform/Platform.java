@@ -23,9 +23,15 @@ public class Platform {
     private ArrayList<Movie> currentMovieList;
     private ArrayList<Movie> filteredMovieList;
 
+    /**
+     * Constructor for Platform
+     */
     public Platform() {
     }
 
+    /**
+     * Method that initializes the platform
+     */
     public void start(final Input input, final ArrayNode output) {
         this.users = input.getUsers();
         this.actions = input.getActions();
@@ -34,6 +40,9 @@ public class Platform {
         stream(output);
     }
 
+    /**
+     * Method that executes the actions
+     */
     public void stream(final ArrayNode output) {
         OutputPrinter printer = new OutputPrinter(output, currentUser);
         currentMovieList = new ArrayList<>();
@@ -112,7 +121,8 @@ public class Platform {
                                         currentUser = user;
                                         currentPage = HOMEPAGETWO;
                                         currentMovieList = new ArrayList<>();
-                                        output.add(printer.printSuccess(currentUser, currentMovieList));
+                                        output.add(printer.printSuccess(currentUser,
+                                                currentMovieList));
                                         break;
                                     }
                                 }
@@ -248,7 +258,8 @@ public class Platform {
                                     break;
                                 }
                                 if (error == 0) {
-                                    output.add(printer.printSuccess(currentUser, filteredMovieList));
+                                    output.add(printer.printSuccess(currentUser,
+                                            filteredMovieList));
                                     break;
                                 }
                             } else {
@@ -302,6 +313,9 @@ public class Platform {
         }
     }
 
+    /**
+     * Method that adds the movies available to the currentMovieList
+     */
     private void addMoviesAvailable() {
         currentMovieList = new ArrayList<>();
         currentMovieList.addAll(movies);

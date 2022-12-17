@@ -16,6 +16,9 @@ public class Credentials {
     public Credentials() {
     }
 
+    /**
+     * Constructor for Credentials
+     */
     public Credentials(final String name, final String password, final String accountType,
                        final String country, final String balance) {
         this.name = name;
@@ -50,9 +53,9 @@ public class Credentials {
 
     /**
      * setter for name
-     * @param name
+     * @param name name
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -66,9 +69,9 @@ public class Credentials {
 
     /**
      * setter for password
-     * @param password
+     * @param password password
      */
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -82,9 +85,9 @@ public class Credentials {
 
     /**
      * setter for accountType
-     * @param accountType
+     * @param accountType accountType
      */
-    public void setAccountType(String accountType) {
+    public void setAccountType(final String accountType) {
         this.accountType = accountType;
     }
 
@@ -98,9 +101,9 @@ public class Credentials {
 
     /**
      * setter for country
-     * @param country
+     * @param country country
      */
-    public void setCountry(String country) {
+    public void setCountry(final String country) {
         this.country = country;
     }
 
@@ -114,25 +117,9 @@ public class Credentials {
 
     /**
      * setter for balance
-     * @param balance
+     * @param balance balance
      */
-    public void setBalance(String balance) {
+    public void setBalance(final String balance) {
         this.balance = balance;
-    }
-
-    @Override
-    public String toString() {
-        return "credentials{"
-                + "name="
-                + name
-                + ", password="
-                + password
-                + ", accountType="
-                + accountType
-                +  ", country="
-                + country
-                + ", balance="
-                + balance
-                + "}";
     }
 }

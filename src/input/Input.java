@@ -26,9 +26,9 @@ public class Input {
 
     /**
      * setter for users
-     * @param credentials
+     * @param credentials users
      */
-    public void setUsers(ArrayList<User> credentials) {
+    public void setUsers(final ArrayList<User> credentials) {
         this.users = credentials;
     }
 
@@ -42,9 +42,9 @@ public class Input {
 
     /**
      * setter for moviesList
-     * @param moviesList
+     * @param moviesList moviesList
      */
-    public void setMovies(ArrayList<Movie> moviesList) {
+    public void setMovies(final ArrayList<Movie> moviesList) {
         this.movies = moviesList;
     }
 
@@ -58,20 +58,23 @@ public class Input {
 
     /**
      * setter for commands
-     * @param commands
+     * @param commands commands
      */
-    public void setActions(ArrayList<Actions> commands) {
+    public void setActions(final ArrayList<Actions> commands) {
         this.actions = commands;
     }
 
+    /**
+     * Method for printing
+     */
     @Override
     public String toString() {
-        return "Input {users=" +
-                users +
-                ", movies=" +
-                movies +
-                ", actions=" +
-                actions +
-                "}";
+        return "Input {users="
+                + users
+                + ", movies="
+                + movies
+                + ", actions="
+                + actions
+                + "}";
     }
 }

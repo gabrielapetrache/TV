@@ -19,7 +19,7 @@ public class Contains implements FilterStrategy {
      * @param list current list of movies
      */
     @Override
-    public void execute(ArrayList<Movie> list) {
+    public void execute(final ArrayList<Movie> list) {
         if (actors != null) {
             for (String actor : actors) {
                 list.removeIf(movie -> !movie.getActors().contains(actor));
@@ -43,9 +43,9 @@ public class Contains implements FilterStrategy {
 
     /**
      * setter for actors
-     * @param actors
+     * @param actors actors
      */
-    public void setActors(ArrayList<String> actors) {
+    public void setActors(final ArrayList<String> actors) {
         this.actors = actors;
     }
 
@@ -59,9 +59,9 @@ public class Contains implements FilterStrategy {
 
     /**
      * setter for genres
-     * @param genres
+     * @param genres genres
      */
-    public void setGenre(ArrayList<String> genres) {
+    public void setGenre(final ArrayList<String> genres) {
         this.genre = genres;
     }
 }

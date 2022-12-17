@@ -52,8 +52,11 @@ public class Movie implements Comparable<Movie> {
         this.rating /= numRatings;
     }
 
+    /**
+     * Method that compares movies first by duration and then by rating
+     */
     @Override
-    public int compareTo(Movie movie) {
+    public int compareTo(final Movie movie) {
         return Comparator.comparing(Movie::getDuration)
                 .thenComparing(Movie::getRating)
                 .compare(this, movie);
@@ -108,7 +111,7 @@ public class Movie implements Comparable<Movie> {
      * setter for name
      * @param name name
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -124,7 +127,7 @@ public class Movie implements Comparable<Movie> {
      * setter for year
      * @param year year
      */
-    public void setYear(int year) {
+    public void setYear(final int year) {
         this.year = year;
     }
 
@@ -138,9 +141,9 @@ public class Movie implements Comparable<Movie> {
 
     /**
      * setter for duration
-     * @param duration
+     * @param duration duration
      */
-    public void setDuration(int duration) {
+    public void setDuration(final int duration) {
         this.duration = duration;
     }
 
@@ -154,9 +157,9 @@ public class Movie implements Comparable<Movie> {
 
     /**
      * setter for genres
-     * @param genres
+     * @param genres genres
      */
-    public void setGenres(ArrayList<String> genres) {
+    public void setGenres(final ArrayList<String> genres) {
         this.genres = genres;
     }
 
@@ -170,9 +173,9 @@ public class Movie implements Comparable<Movie> {
 
     /**
      * setter for actors
-     * @param actors
+     * @param actors actors
      */
-    public void setActors(ArrayList<String> actors) {
+    public void setActors(final ArrayList<String> actors) {
         this.actors = actors;
     }
 
@@ -186,9 +189,9 @@ public class Movie implements Comparable<Movie> {
 
     /**
      * setter for countriesBanned
-     * @param countriesBanned
+     * @param countriesBanned countriesBanned
      */
-    public void setCountriesBanned(ArrayList<String> countriesBanned) {
+    public void setCountriesBanned(final ArrayList<String> countriesBanned) {
         this.countriesBanned = countriesBanned;
     }
 
@@ -202,9 +205,9 @@ public class Movie implements Comparable<Movie> {
 
     /**
      * setter for numLikes
-     * @param numLikes
+     * @param numLikes numLikes
      */
-    public void setNumLikes(int numLikes) {
+    public void setNumLikes(final int numLikes) {
         this.numLikes = numLikes;
     }
 
@@ -218,9 +221,9 @@ public class Movie implements Comparable<Movie> {
 
     /**
      * setter for rating
-     * @param rating
+     * @param rating rating
      */
-    public void setRating(double rating) {
+    public void setRating(final double rating) {
         this.rating = rating;
     }
 
@@ -234,28 +237,16 @@ public class Movie implements Comparable<Movie> {
 
     /**
      * setter for numRatings
-     * @param numRatings
+     * @param numRatings numRatings
      */
-    public void setNumRatings(int numRatings) {
+    public void setNumRatings(final int numRatings) {
         this.numRatings = numRatings;
     }
 
     /**
-     * getter for ratings
-     * @return ratings
+     * prints the movie's details
+     * @return string
      */
-    public ArrayList<Double> getRatings() {
-        return ratings;
-    }
-
-    /**
-     * setter for ratings
-     * @param ratings
-     */
-    public void setRatings(ArrayList<Double> ratings) {
-        this.ratings = ratings;
-    }
-
     @Override
     public String toString() {
         return "Movies{"

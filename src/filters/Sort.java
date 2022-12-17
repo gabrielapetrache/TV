@@ -20,7 +20,7 @@ public class Sort implements FilterStrategy {
      * @param list current list of movies
      */
     @Override
-    public void execute(ArrayList<Movie> list) {
+    public void execute(final ArrayList<Movie> list) {
 
         if (rating != null) {
             if (rating.equals("increasing")) {
@@ -50,7 +50,7 @@ public class Sort implements FilterStrategy {
      * setter for rating
      * @param rating rating
      */
-    public void setRating(String rating) {
+    public void setRating(final String rating) {
         this.rating = rating;
     }
 
@@ -66,7 +66,7 @@ public class Sort implements FilterStrategy {
      * setter for duration
      * @param duration of the movie
      */
-    public void setDuration(String duration) {
+    public void setDuration(final String duration) {
         this.duration = duration;
     }
 }

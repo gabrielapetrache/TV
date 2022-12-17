@@ -13,11 +13,17 @@ public class OutputPrinter {
     private User currentUser;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public OutputPrinter(ArrayNode output, User curr) {
+    /**
+     * Constructor for OutputPrinter
+     */
+    public OutputPrinter(final ArrayNode output, final User curr) {
         this.output = output;
         this.currentUser = curr;
     }
 
+    /**
+     * Method that prints the output in case of error
+     */
     public ObjectNode printError() {
 
         ObjectNode node = mapper.createObjectNode();
@@ -31,7 +37,10 @@ public class OutputPrinter {
         return node;
     }
 
-    public ObjectNode printSuccess(User curr, ArrayList<Movie> currentMovieList) {
+    /**
+     * Method that prints the output in case of success
+     */
+    public ObjectNode printSuccess(final User curr, final ArrayList<Movie> currentMovieList) {
         currentUser = curr;
         ObjectNode node = mapper.createObjectNode();
         String empty = null;
@@ -46,7 +55,10 @@ public class OutputPrinter {
         return node;
     }
 
-    public ArrayNode printMovieList(ArrayList<Movie> currentMovieList) {
+    /**
+     * Method that prints the movie list
+     */
+    public ArrayNode printMovieList(final ArrayList<Movie> currentMovieList) {
         ArrayNode list = mapper.createArrayNode();
         if (currentMovieList != null) {
             for (Movie movie : currentMovieList) {

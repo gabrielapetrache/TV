@@ -30,9 +30,9 @@ public class Actions {
 
     /**
      * setter for type
-     * @param type
+     * @param type type
      */
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = type;
     }
 
@@ -46,9 +46,9 @@ public class Actions {
 
     /**
      * setter for page
-     * @param page
+     * @param page page
      */
-    public void setPage(String page) {
+    public void setPage(final String page) {
         this.page = page;
     }
     /**
@@ -61,9 +61,9 @@ public class Actions {
 
     /**
      * setter for startsWith
-     * @param startsWith
+     * @param startsWith startsWith
      */
-    public void setStartsWith(String startsWith) {
+    public void setStartsWith(final String startsWith) {
         this.startsWith = startsWith;
     }
 
@@ -77,9 +77,9 @@ public class Actions {
 
     /**
      * setter for credentials
-     * @param credentials
+     * @param credentials credentials
      */
-    public void setCredentials(Credentials credentials) {
+    public void setCredentials(final Credentials credentials) {
         this.credentials = credentials;
     }
 
@@ -93,9 +93,9 @@ public class Actions {
 
     /**
      * setter for feature
-     * @param feature
+     * @param feature feature
      */
-    public void setFeature(String feature) {
+    public void setFeature(final String feature) {
         this.feature = feature;
     }
 
@@ -109,9 +109,9 @@ public class Actions {
 
     /**
      * setter for count
-     * @param count
+     * @param count count
      */
-    public void setCount(int count) {
+    public void setCount(final int count) {
         this.count = count;
     }
 
@@ -125,9 +125,9 @@ public class Actions {
 
     /**
      * setter for movie
-     * @param movie
+     * @param movie movie
      */
-    public void setMovie(String movie) {
+    public void setMovie(final String movie) {
         this.movie = movie;
     }
 
@@ -141,9 +141,9 @@ public class Actions {
 
     /**
      * setter for filters
-     * @param filters
+     * @param filters   filters
      */
-    public void setFilters(Filters filters) {
+    public void setFilters(final Filters filters) {
         this.filters = filters;
     }
 
@@ -157,12 +157,16 @@ public class Actions {
 
     /**
      * setter for rate
-     * @param rate
+     * @param rate rate
      */
-    public void setRate(int rate) {
+    public void setRate(final int rate) {
         this.rate = rate;
     }
 
+    /**
+     * print the actions
+     * @return actions
+     */
     @Override
     public String toString() {
         return "Actions{"

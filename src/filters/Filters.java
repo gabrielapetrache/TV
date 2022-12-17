@@ -18,7 +18,7 @@ public class Filters {
      * Method for filtering movies by strategy
      * @param list current list of movies
      */
-    public ArrayList<Movie> filter(ArrayList<Movie> list) {
+    public ArrayList<Movie> filter(final ArrayList<Movie> list) {
         if (sort != null) {
             sort.execute(list);
         }
@@ -28,6 +28,9 @@ public class Filters {
         return list;
     }
 
+
+    /* getters and setters are mandatory for the JSON parser
+     * even if they are not used */
     /**
      * getter for sort
      * @return sort
@@ -38,9 +41,9 @@ public class Filters {
 
     /**
      * setter for sort
-     * @param sort
+     * @param sort sort
      */
-    public void setSort(Sort sort) {
+    public void setSort(final Sort sort) {
         this.sort = sort;
     }
 
@@ -54,9 +57,9 @@ public class Filters {
 
     /**
      * setter for contains
-     * @param contains
+     * @param contains contains
      */
-    public void setContains(Contains contains) {
+    public void setContains(final Contains contains) {
         this.contains = contains;
     }
 }
