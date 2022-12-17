@@ -1,10 +1,10 @@
 package filters;
 
-import input.Movies;
+import input.Movie;
 
 import java.util.ArrayList;
 
-public class Contains {
+public class Contains implements FilterStrategy {
     private ArrayList<String> actors;
     private ArrayList<String> genre;
 
@@ -16,8 +16,10 @@ public class Contains {
 
     /**
      * Method for filtering movies by actors and genre
+     * @param list current list of movies
      */
-    public void execute(ArrayList<Movies> list) {
+    @Override
+    public void execute(ArrayList<Movie> list) {
         if (actors != null) {
             for (String actor : actors) {
                 list.removeIf(movie -> !movie.getActors().contains(actor));

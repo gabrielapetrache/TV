@@ -23,26 +23,29 @@ public class ChangePage {
                 return toChange;
 
             case HOMEPAGETWO:
-                if (toChange.equals(UPGRADES) || toChange.equals(MOVIES) || toChange.equals(LOGIN)) {
+                if (toChange.equals(UPGRADES) || toChange.equals(MOVIES)
+                        || toChange.equals(LOGIN) || toChange.equals(REGISTER)) {
                     return toChange;
                 }
                 return "error";
 
             case UPGRADES:
-                if (toChange.equals(HOMEPAGETWO) || toChange.equals(MOVIES) || toChange.equals(LOGIN)) {
+                if (toChange.equals(HOMEPAGETWO) || toChange.equals(MOVIES)
+                        || toChange.equals(LOGIN) || toChange.equals(UPGRADES)) {
                     return toChange;
                 }
                 return "error";
 
             case MOVIES:
-                if (toChange.equals(HOMEPAGETWO) || toChange.equals(DETAILS) || toChange.equals(LOGIN)) {
+                if (toChange.equals(HOMEPAGETWO) || toChange.equals(DETAILS)
+                        || toChange.equals(LOGIN) || toChange.equals(MOVIES)) {
                     return toChange;
                 }
                 return "error";
 
             case DETAILS:
                 if (toChange.equals(HOMEPAGETWO) || toChange.equals(MOVIES) || toChange.equals(UPGRADES)
-                        || toChange.equals(LOGIN)) {
+                        || toChange.equals(LOGIN) || toChange.equals(DETAILS)) {
                     return toChange;
                 }
                 return "error";

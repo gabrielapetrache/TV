@@ -16,5 +16,11 @@ public final class PageTypes {
     public static final String REGISTER = "register";
     public static final String CHANGE = "change page";
     public static final String ON = "on page";
+    public static final String BUYTOKEN = "buy tokens";
+    public static final String PREMIUM = "buy premium account";
+    public static final String PURCHASE = "purchase";
+    public static final String LIKE = "like";
+    public static final String RATE = "rate";
+    public static final String WATCH = "watch";
 
 }

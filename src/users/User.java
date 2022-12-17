@@ -3,31 +3,136 @@ package users;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import input.Movies;
+import input.Movie;
 
 import java.util.ArrayList;
 
-public class Users {
+public class User {
     private Credentials credentials;
     private int tokensCount = 0;
     private int numFreePremiumMovies = 15;
-    private ArrayList<Movies> purchasedMovies;
-    private ArrayList<Movies> watchedMovies;
-    private ArrayList<Movies> likedMovies;
-    private ArrayList<Movies> ratedMovies;
+    private ArrayList<Movie> purchasedMovies = new ArrayList<>();
+    private ArrayList<Movie> watchedMovies = new ArrayList<>();
+    private ArrayList<Movie> likedMovies = new ArrayList<>();
+    private ArrayList<Movie> ratedMovies = new ArrayList<>();
 
     /**
      * Default constructor
      */
-    public Users() {
+    public User() {
     }
 
-    public Users(final Credentials credentials) {
+    public User(final Credentials credentials) {
         this.credentials = credentials;
         this.purchasedMovies = new ArrayList<>();
         this.watchedMovies = new ArrayList<>();
         this.likedMovies = new ArrayList<>();
         this.ratedMovies = new ArrayList<>();
+    }
+
+    /**
+     * Allows the user to buy tokens
+     * @param tokens to buy
+     * @return error status
+     */
+    public int buyTokens(final int tokens) {
+        int balance = Integer.parseInt(credentials.getBalance());
+        if (balance >= tokens) {
+            balance -= tokens;
+            credentials.setBalance(String.valueOf(balance));
+            tokensCount += tokens;
+            return 0;
+        }
+        return -1;
+    }
+
+    /**
+     * Allows the user to buy a premium subscription
+     * @return error status
+     */
+    public int buyPremium() {
+        if (tokensCount >= 10) {
+            tokensCount -= 10;
+            numFreePremiumMovies = 15;
+            credentials.setAccountType("premium");
+            return 0;
+        }
+        return -1;
+    }
+
+    /**
+     * Allows the user to buy a movie
+     * @param movie to buy
+     * @return error status
+     */
+    public int buyMovie(final Movie movie) {
+        if (movie == null) {
+            return -1;
+        }
+        if (credentials.getAccountType().equals("premium")) {
+            if (numFreePremiumMovies > 0) {
+                numFreePremiumMovies--;
+                purchasedMovies.add(movie);
+                return 0;
+            }
+        }
+        if (tokensCount >= 2) {
+            tokensCount -= 2;
+            purchasedMovies.add(movie);
+            return 0;
+        }
+        return -1;
+    }
+
+    /**
+     * Allows the user to watch a movie
+     * @param movie to watch
+     * @return error status
+     */
+    public int watchMovie(final Movie movie) {
+        if (movie == null) {
+            return -1;
+        }
+        if (purchasedMovies.contains(movie)) {
+            watchedMovies.add(movie);
+            return 0;
+        }
+        return -1;
+    }
+
+    /**
+     * Allows the user to like a movie
+     * @param movie to like
+     * @return error status
+     */
+    public int likeMovie(final Movie movie) {
+        if (movie == null) {
+            return -1;
+        }
+        if (purchasedMovies.contains(movie) && watchedMovies.contains(movie)) {
+            likedMovies.add(movie);
+            movie.setNumLikes(movie.getNumLikes() + 1);
+            return 0;
+        }
+        return -1;
+    }
+
+    /**
+     * Allows the user to rate a movie
+     * @param movie to rate
+     * @param rating to give
+     * @return error status
+     */
+    public int rateMovie(final Movie movie, final double rating) {
+        if (movie == null) {
+            return -1;
+        }
+        if (purchasedMovies.contains(movie) && watchedMovies.contains(movie)) {
+            movie.rateMovie(rating);
+            ratedMovies.add(movie);
+            return 0;
+        }
+        return -1;
     }
 
     /**
@@ -47,7 +152,7 @@ public class Users {
             user.set("purchasedMovies", empty);
         } else {
             ArrayNode list = mapper.createArrayNode();
-            for (Movies movie : purchasedMovies) {
+            for (Movie movie : purchasedMovies) {
                 ObjectNode node = movie.printMovie();
                 list.add(node);
             }
@@ -58,7 +163,7 @@ public class Users {
             user.set("watchedMovies", empty);
         } else {
             ArrayNode list = mapper.createArrayNode();
-            for (Movies movie : watchedMovies) {
+            for (Movie movie : watchedMovies) {
                 ObjectNode node = movie.printMovie();
                 list.add(node);
             }
@@ -69,7 +174,7 @@ public class Users {
             user.set("likedMovies", empty);
         } else {
             ArrayNode list = mapper.createArrayNode();
-            for (Movies movie : likedMovies) {
+            for (Movie movie : likedMovies) {
                 ObjectNode node = movie.printMovie();
                 list.add(node);
             }
@@ -80,7 +185,7 @@ public class Users {
             user.set("ratedMovies", empty);
         } else {
             ArrayNode list = mapper.createArrayNode();
-            for (Movies movie : ratedMovies) {
+            for (Movie movie : ratedMovies) {
                 ObjectNode node = movie.printMovie();
                 list.add(node);
             }
@@ -142,7 +247,7 @@ public class Users {
      * getter for purchasedMovies
      * @return purchasedMovies
      */
-    public ArrayList<Movies> getPurchasedMovies() {
+    public ArrayList<Movie> getPurchasedMovies() {
         return purchasedMovies;
     }
 
@@ -150,7 +255,7 @@ public class Users {
      * setter for purchasedMovies
      * @param purchasedMovies
      */
-    public void setPurchasedMovies(ArrayList<Movies> purchasedMovies) {
+    public void setPurchasedMovies(ArrayList<Movie> purchasedMovies) {
         this.purchasedMovies = purchasedMovies;
     }
 
@@ -158,7 +263,7 @@ public class Users {
      * getter for watchedMovies
      * @return watchedMovies
      */
-    public ArrayList<Movies> getWatchedMovies() {
+    public ArrayList<Movie> getWatchedMovies() {
         return watchedMovies;
     }
 
@@ -166,7 +271,7 @@ public class Users {
      * setter for watchedMovies
      * @param watchedMovies
      */
-    public void setWatchedMovies(ArrayList<Movies> watchedMovies) {
+    public void setWatchedMovies(ArrayList<Movie> watchedMovies) {
         this.watchedMovies = watchedMovies;
     }
 
@@ -174,7 +279,7 @@ public class Users {
      * getter for likedMovies
      * @return likedMovies
      */
-    public ArrayList<Movies> getLikedMovies() {
+    public ArrayList<Movie> getLikedMovies() {
         return likedMovies;
     }
 
@@ -182,7 +287,7 @@ public class Users {
      * setter for likedMovies
      * @param likedMovies
      */
-    public void setLikedMovies(ArrayList<Movies> likedMovies) {
+    public void setLikedMovies(ArrayList<Movie> likedMovies) {
         this.likedMovies = likedMovies;
     }
 
@@ -190,7 +295,7 @@ public class Users {
      * getter for ratedMovies
      * @return ratedMovies
      */
-    public ArrayList<Movies> getRatedMovies() {
+    public ArrayList<Movie> getRatedMovies() {
         return ratedMovies;
     }
 
@@ -198,7 +303,7 @@ public class Users {
      * setter for ratedMovies
      * @param ratedMovies
      */
-    public void setRatedMovies(ArrayList<Movies> ratedMovies) {
+    public void setRatedMovies(ArrayList<Movie> ratedMovies) {
         this.ratedMovies = ratedMovies;
     }
 

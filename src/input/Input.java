@@ -1,13 +1,13 @@
 package input;
 
 import pages.Actions;
-import users.Users;
+import users.User;
 
 import java.util.ArrayList;
 
 public class Input {
-    private ArrayList<Users> users;
-    private ArrayList<Movies> movies;
+    private ArrayList<User> users;
+    private ArrayList<Movie> movies;
     private ArrayList<Actions> actions;
 
     /**
@@ -20,7 +20,7 @@ public class Input {
      * getter for users
      * @return users
      */
-    public ArrayList<Users> getUsers() {
+    public ArrayList<User> getUsers() {
         return users;
     }
 
@@ -28,7 +28,7 @@ public class Input {
      * setter for users
      * @param credentials
      */
-    public void setUsers(ArrayList<Users> credentials) {
+    public void setUsers(ArrayList<User> credentials) {
         this.users = credentials;
     }
 
@@ -36,7 +36,7 @@ public class Input {
      * getter for moviesList
      * @return moviesList
      */
-    public ArrayList<Movies> getMovies() {
+    public ArrayList<Movie> getMovies() {
         return movies;
     }
 
@@ -44,7 +44,7 @@ public class Input {
      * setter for moviesList
      * @param moviesList
      */
-    public void setMovies(ArrayList<Movies> moviesList) {
+    public void setMovies(ArrayList<Movie> moviesList) {
         this.movies = moviesList;
     }
 

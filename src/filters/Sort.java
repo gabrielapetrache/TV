@@ -1,10 +1,11 @@
 package filters;
 
-import input.Movies;
+import input.Movie;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Sort {
+public class Sort implements FilterStrategy {
     private String rating;
     private String duration;
 
@@ -16,53 +17,23 @@ public class Sort {
 
     /**
      * Method for sorting movies by rating and duration
+     * @param list current list of movies
      */
-    public void execute(ArrayList<Movies> list) {
+    @Override
+    public void execute(ArrayList<Movie> list) {
+
         if (rating != null) {
             if (rating.equals("increasing")) {
-                list.sort((movie1, movie2) -> {
-                    if (movie1.getRating() > movie2.getRating()) {
-                        return 1;
-                    } else if (movie1.getRating() < movie2.getRating()) {
-                        return -1;
-                    } else {
-                        return 0;
-                    }
-                });
-            } else if (rating.equals("decreasing")) {
-                list.sort((movie1, movie2) -> {
-                    if (movie1.getRating() > movie2.getRating()) {
-                        return -1;
-                    } else if (movie1.getRating() < movie2.getRating()) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                });
+                list.sort(Comparator.comparing(Movie::getRating));
+            } else {
+                list.sort(Comparator.comparing(Movie::getRating).reversed());
             }
         }
-
         if (duration != null) {
             if (duration.equals("increasing")) {
-                list.sort((movie1, movie2) -> {
-                    if (movie1.getDuration() > movie2.getDuration()) {
-                        return 1;
-                    } else if (movie1.getDuration() < movie2.getDuration()) {
-                        return -1;
-                    } else {
-                        return 0;
-                    }
-                });
-            } else if (duration.equals("decreasing")) {
-                list.sort((movie1, movie2) -> {
-                    if (movie1.getDuration() > movie2.getDuration()) {
-                        return -1;
-                    } else if (movie1.getDuration() < movie2.getDuration()) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                });
+                list.sort(Comparator.comparing(Movie::getDuration));
+            } else {
+                list.sort(Comparator.comparing(Movie::getDuration).reversed());
             }
         }
     }

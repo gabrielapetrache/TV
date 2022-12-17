@@ -30,7 +30,7 @@ public class Main {
 
         ArrayNode output = objectMapper.createArrayNode();
 
-        Platform platform = Platform.getInstance();
+        Platform platform = new Platform();
         platform.start(input, output);
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();

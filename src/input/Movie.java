@@ -5,8 +5,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Movies {
+public class Movie implements Comparable<Movie> {
     private String name;
     private int year;
     private int duration;
@@ -16,8 +17,46 @@ public class Movies {
     private int numLikes;
     private double rating;
     private int numRatings;
+    private ArrayList<Double> ratings = new ArrayList<>();
 
-    public Movies() {
+    public Movie() {
+    }
+
+    public Movie(final String name, final int year, final int duration,
+                 final ArrayList<String> genres, final ArrayList<String> actors,
+                 final ArrayList<String> countriesBanned, final int numLikes,
+                 final double rating, final int numRatings, final ArrayList<Double> ratings) {
+        this.name = name;
+        this.year = year;
+        this.duration = duration;
+        this.genres = genres;
+        this.actors = actors;
+        this.countriesBanned = countriesBanned;
+        this.numLikes = numLikes;
+        this.rating = rating;
+        this.numRatings = numRatings;
+        this.ratings = ratings;
+    }
+
+    /**
+     * Method to calculate the average rating of a movie
+     * @param rating to add
+     */
+    public void rateMovie(final double rating) {
+        numRatings++;
+        ratings.add(rating);
+        this.rating = 0;
+        for (Double rate : ratings) {
+            this.rating += rate;
+        }
+        this.rating /= numRatings;
+    }
+
+    @Override
+    public int compareTo(Movie movie) {
+        return Comparator.comparing(Movie::getDuration)
+                .thenComparing(Movie::getRating)
+                .compare(this, movie);
     }
 
     /**
@@ -199,6 +238,22 @@ public class Movies {
      */
     public void setNumRatings(int numRatings) {
         this.numRatings = numRatings;
+    }
+
+    /**
+     * getter for ratings
+     * @return ratings
+     */
+    public ArrayList<Double> getRatings() {
+        return ratings;
+    }
+
+    /**
+     * setter for ratings
+     * @param ratings
+     */
+    public void setRatings(ArrayList<Double> ratings) {
+        this.ratings = ratings;
     }
 
     @Override

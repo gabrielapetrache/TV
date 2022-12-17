@@ -1,5 +1,9 @@
 package filters;
 
+import input.Movie;
+
+import java.util.ArrayList;
+
 public class Filters {
     private Sort sort;
     private Contains contains;
@@ -8,6 +12,19 @@ public class Filters {
      * Default constructor
      */
     public Filters() {
+    }
+
+    /**
+     * Method for filtering movies by strategy
+     * @param list current list of movies
+     */
+    public void filter(ArrayList<Movie> list) {
+        if (sort != null) {
+            sort.execute(list);
+        }
+        if (contains != null) {
+            contains.execute(list);
+        }
     }
 
     /**

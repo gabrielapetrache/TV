@@ -1,50 +1,45 @@
 package printer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import input.Movies;
-import users.Users;
+import input.Movie;
+import users.User;
 
 import java.util.ArrayList;
 
 public class OutputPrinter {
     private ArrayNode output;
-    private Users currentUser;
-    private ArrayList<Movies> currentMovieList;
+    private User currentUser;
+    private ArrayList<Movie> currentMovieList;
     private ObjectMapper mapper = new ObjectMapper();
 
-    public OutputPrinter(ArrayNode output, Users curr, ArrayList<Movies> list) {
+    public OutputPrinter(ArrayNode output, User curr, ArrayList<Movie> list) {
         this.output = output;
         this.currentMovieList = list;
         this.currentUser = curr;
     }
 
-    public ObjectNode printError(Users curr, ArrayList<Movies> currentMovieList) {
+    public ObjectNode printError() {
 
         ObjectNode node = mapper.createObjectNode();
+        ArrayNode list = mapper.createArrayNode();
         String empty = null;
-        this.currentMovieList = currentMovieList;
 
         node.put("error", "Error");
-        node.set("currentMoviesList", printMovieList());
-        if (curr != null) {
-            node.set("currentUser", curr.printUser());
-        } else {
-            node.put("currentUser", empty);
-        }
+        node.set("currentMoviesList", list);
+        node.put("currentUser", empty);
+
         return node;
     }
 
-    public ObjectNode printSuccess(Users curr, ArrayList<Movies> currentMovieList) {
+    public ObjectNode printSuccess(User curr, ArrayList<Movie> currentMovieList) {
         currentUser = curr;
-        this.currentMovieList = currentMovieList;
         ObjectNode node = mapper.createObjectNode();
         String empty = null;
 
         node.put("error", empty);
-        node.set("currentMoviesList", printMovieList());
+        node.set("currentMoviesList", printMovieList(currentMovieList));
         if (currentUser != null) {
             node.set("currentUser", currentUser.printUser());
         } else {
@@ -53,10 +48,10 @@ public class OutputPrinter {
         return node;
     }
 
-    public ArrayNode printMovieList() {
+    public ArrayNode printMovieList(ArrayList<Movie> currentMovieList) {
         ArrayNode list = mapper.createArrayNode();
         if (currentMovieList != null) {
-            for (Movies movie : currentMovieList) {
+            for (Movie movie : currentMovieList) {
                 ObjectNode node = movie.printMovie();
                 list.add(node);
             }
