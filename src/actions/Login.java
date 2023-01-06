@@ -11,7 +11,12 @@ import static platform.Platform.*;
 
 public class Login implements Feature {
 
-    User currentUser = null;
+    User currentUser;
+
+    public Login(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public void execute(Action currentAction, ArrayNode output, ArrayList<User> users) {
         OutputPrinter printer = OutputPrinter.getInstance();
         if (currentPage.equals(LOGIN)) {
@@ -33,7 +38,6 @@ public class Login implements Feature {
             if (currentUser == null) {
                 currentPage = HOMEPAGEONE;
                 output.add(printer.printError());
-                return;
             }
         } else {
             /* if the current page is not login, the error is printed */
