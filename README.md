@@ -19,5 +19,6 @@
 * For filters, I have used a separate class that contains a list of filters, and using the strategy design pattern, I have created a method that executes each operation, based on what type of filtering there needs to be applied
 * In the printer package, I have a helper class that helps print the output of the commands, in case of error and success, in a json format
 
+* OutputPrinter is singleton
 ### Comments:
 * I will try to better modularize the code for the second part of the project, by implementing classes for each page, which would be able to perform the page's specific actions, and by adding more design patterns to the project, where useful

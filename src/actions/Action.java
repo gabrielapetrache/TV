@@ -1,9 +1,9 @@
-package pages;
+package actions;
 
 import filters.Filters;
 import users.Credentials;
 
-public class Actions {
+public class Action {
     private String type;
     private String page;
     private Credentials credentials;
@@ -17,7 +17,7 @@ public class Actions {
     /**
      * Default constructor
      */
-    public Actions() {
+    public Action() {
     }
 
     /**

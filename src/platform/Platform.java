@@ -2,26 +2,26 @@ package platform;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import filters.Filters;
-import pages.Actions;
+import actions.Action;
 import input.Input;
 import input.Movie;
-import pages.ChangePage;
+import actions.ChangePage;
 import printer.OutputPrinter;
 import users.Credentials;
 import users.User;
 
 import java.util.ArrayList;
 
-import static pages.PageTypes.*;
+import static pages.PageStrings.*;
 
 public class Platform {
     private ArrayList<User> users;
     private ArrayList<Movie> movies;
-    private ArrayList<Actions> actions;
-    private String currentPage;
+    private ArrayList<Action> actions;
+    public static String currentPage;
     private User currentUser;
-    private ArrayList<Movie> currentMovieList;
-    private ArrayList<Movie> filteredMovieList;
+    public static ArrayList<Movie> currentMovieList;
+    private final OutputPrinter printer = OutputPrinter.getInstance();
 
     /**
      * Constructor for Platform
@@ -44,10 +44,9 @@ public class Platform {
      * Method that executes the actions
      */
     public void stream(final ArrayNode output) {
-        OutputPrinter printer = new OutputPrinter(output, currentUser);
         currentMovieList = new ArrayList<>();
 
-        for (Actions currentAction : actions) {
+        for (Action currentAction : actions) {
             String type = currentAction.getType();
             ChangePage changePage = new ChangePage();
 
@@ -57,54 +56,10 @@ public class Platform {
                      /* logout is a separate case from the others,
                          because it also resets the current user */
                     if (!newPage.equals(LOGOUT)) {
-                        String check = changePage.execute(currentPage, newPage);
-
-                        if (check.equals("error")) {
-                            output.add(printer.printError());
-                            break;
-                        } else if (check.equals("login") && !currentPage.equals(HOMEPAGEONE)) {
-                            output.add(printer.printError());
-                            break;
-                        }
-                        /* the page was successfully changed */
-                        currentPage = newPage;
-                            /* if the user accessed the movie page,
-                            he will see all the movies available for his country */
-                        if (currentPage.equals(MOVIES)) {
-                            currentMovieList = new ArrayList<>();
-                            addMoviesAvailable();
-                            output.add(printer.printSuccess(currentUser, currentMovieList));
-                            break;
-                        }
-                        if (currentPage.equals(DETAILS)) {
-                            String movieTitle = currentAction.getMovie();
-                            int error = 1;
-                            filteredMovieList = new ArrayList<>(currentMovieList);
-
-                            for (Movie movie : currentMovieList) {
-                                if (!movie.getName().equals(movieTitle)) {
-                                    filteredMovieList.remove(movie);
-                                } else {
-                                    error = 0;
-                                }
-                            }
-                            if (error == 1) {
-                                addMoviesAvailable();
-                                currentPage = MOVIES;
-                                output.add(printer.printError());
-                            } else {
-                                output.add(printer.printSuccess(currentUser, filteredMovieList));
-                            }
-                        }
+                        currentPage = changePage.execute(currentPage, newPage, output, movies,
+                                currentUser, currentAction);
                     } else {
-                        if (currentUser == null) {
-                            output.add(printer.printError());
-                            break;
-                        }
-                        /* the user logged out */
-                        currentMovieList = new ArrayList<>();
-                        currentUser = null;
-                        currentPage = HOMEPAGEONE;
+                        logoutCase(output);
                     }
                 }
                 case ON -> {
@@ -225,18 +180,18 @@ public class Platform {
                         case PURCHASE:
                             if (currentPage.equals(DETAILS)) {
                                 int error;
-                                if (filteredMovieList.isEmpty()) {
+                                if (currentMovieList.isEmpty()) {
                                     output.add(printer.printError());
                                     break;
                                 }
-                                Movie movie = filteredMovieList.get(0);
+                                Movie movie = currentMovieList.get(0);
 
                                 error = currentUser.buyMovie(movie);
                                 if (error == -1) {
                                     output.add(printer.printError());
                                     break;
                                 }
-                                output.add(printer.printSuccess(currentUser, filteredMovieList));
+                                output.add(printer.printSuccess(currentUser, currentMovieList));
                                 break;
 
                             } else {
@@ -246,11 +201,11 @@ public class Platform {
                             break;
                         case WATCH:
                             if (currentPage.equals(DETAILS)) {
-                                if (filteredMovieList.isEmpty()) {
+                                if (currentMovieList.isEmpty()) {
                                     output.add(printer.printError());
                                     break;
                                 }
-                                Movie toWatch = filteredMovieList.get(0);
+                                Movie toWatch = currentMovieList.get(0);
 
                                 int error = currentUser.watchMovie(toWatch);
                                 if (error == -1) {
@@ -259,7 +214,7 @@ public class Platform {
                                 }
                                 if (error == 0) {
                                     output.add(printer.printSuccess(currentUser,
-                                            filteredMovieList));
+                                            currentMovieList));
                                     break;
                                 }
                             } else {
@@ -269,17 +224,17 @@ public class Platform {
                             }
                         case LIKE:
                             if (currentPage.equals(DETAILS)) {
-                                if (filteredMovieList.isEmpty()) {
+                                if (currentMovieList.isEmpty()) {
                                     output.add(printer.printError());
                                     break;
                                 }
-                                Movie toLike = filteredMovieList.get(0);
+                                Movie toLike = currentMovieList.get(0);
                                 int error = currentUser.likeMovie(toLike);
                                 if (error == -1) {
                                     output.add(printer.printError());
                                     break;
                                 }
-                                output.add(printer.printSuccess(currentUser, filteredMovieList));
+                                output.add(printer.printSuccess(currentUser, currentMovieList));
                             } else {
                                 /* if the current page is not upgrades, the error is printed */
                                 output.add(printer.printError());
@@ -287,17 +242,17 @@ public class Platform {
                             break;
                         case RATE:
                             if (currentPage.equals(DETAILS)) {
-                                if (filteredMovieList.isEmpty()) {
+                                if (currentMovieList.isEmpty()) {
                                     output.add(printer.printError());
                                     break;
                                 }
-                                Movie toRate = filteredMovieList.get(0);
+                                Movie toRate = currentMovieList.get(0);
                                 int error = currentUser.rateMovie(toRate, currentAction.getRate());
                                 if (error == -1) {
                                     output.add(printer.printError());
                                     break;
                                 }
-                                output.add(printer.printSuccess(currentUser, filteredMovieList));
+                                output.add(printer.printSuccess(currentUser, currentMovieList));
 
                             } else {
                                 /* if the current page is not upgrades, the error is printed */
@@ -314,9 +269,24 @@ public class Platform {
     }
 
     /**
+     * This method checks if the user is logged in, in case he wants to log out
+     * @param output output in case of error
+     */
+    private void logoutCase(ArrayNode output) {
+        if (currentUser == null) {
+            output.add(printer.printError());
+            return;
+        }
+        /* the user logged out */
+        currentMovieList = new ArrayList<>();
+        currentUser = null;
+        currentPage = HOMEPAGEONE;
+    }
+
+    /**
      * Method that adds the movies available to the currentMovieList
      */
-    private void addMoviesAvailable() {
+    public void addMoviesAvailable() {
         currentMovieList = new ArrayList<>();
         currentMovieList.addAll(movies);
         ArrayList<Movie> copyMovieList = new ArrayList<>(currentMovieList);
@@ -328,6 +298,5 @@ public class Platform {
                 }
             }
         }
-
     }
 }

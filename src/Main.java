@@ -21,16 +21,13 @@ public class Main {
         ObjectMapper objectMapper = new ObjectMapper();
         Input input = objectMapper.readValue(new File(args[0]), Input.class);
 
-        //System.out.println(input.getUsers());
-
         ArrayNode output = objectMapper.createArrayNode();
 
         Platform platform = new Platform();
         platform.start(input, output);
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-        objectWriter.writeValue(new File(args[1]), output);
         objectWriter.writeValue(new File(args[0].replace("/in", "/out")), output);
+        objectWriter.writeValue(new File(args[1]), output);
     }
-
 }

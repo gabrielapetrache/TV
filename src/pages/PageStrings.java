@@ -1,7 +1,7 @@
 package pages;
 
-public final class PageTypes {
-    private PageTypes() {
+public final class PageStrings {
+    private PageStrings() {
     }
 
     public static final String HOMEPAGEONE = "homepage unauthenticated";

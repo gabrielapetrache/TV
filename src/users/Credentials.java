@@ -27,6 +27,7 @@ public class Credentials {
         this.country = country;
         this.balance = balance;
     }
+
     /**
      * Method that writes the user's credentials in a JSON format
      */

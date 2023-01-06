@@ -9,16 +9,21 @@ import users.User;
 import java.util.ArrayList;
 
 public class OutputPrinter {
-    private final ArrayNode output;
-    private User currentUser;
+    private static final OutputPrinter instance = new OutputPrinter();
     private final ObjectMapper mapper = new ObjectMapper();
 
     /**
      * Constructor for OutputPrinter
      */
-    public OutputPrinter(final ArrayNode output, final User curr) {
-        this.output = output;
-        this.currentUser = curr;
+    private OutputPrinter() {
+    }
+
+    /**
+     * Returns the instance of OutputPrinter
+     * @return instance of OutputPrinter
+     */
+    public static OutputPrinter getInstance() {
+        return instance;
     }
 
     /**
@@ -40,8 +45,7 @@ public class OutputPrinter {
     /**
      * Method that prints the output in case of success
      */
-    public ObjectNode printSuccess(final User curr, final ArrayList<Movie> currentMovieList) {
-        currentUser = curr;
+    public ObjectNode printSuccess(final User currentUser, final ArrayList<Movie> currentMovieList) {
         ObjectNode node = mapper.createObjectNode();
         String empty = null;
 

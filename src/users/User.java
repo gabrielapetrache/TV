@@ -15,6 +15,7 @@ public class User {
     private ArrayList<Movie> watchedMovies = new ArrayList<>();
     private ArrayList<Movie> likedMovies = new ArrayList<>();
     private ArrayList<Movie> ratedMovies = new ArrayList<>();
+    private String currentPage;
 
     /**
      * Default constructor
@@ -308,6 +309,22 @@ public class User {
      */
     public void setRatedMovies(final ArrayList<Movie> ratedMovies) {
         this.ratedMovies = ratedMovies;
+    }
+
+    /**
+     * getter for currentPage
+     * @return currentPage
+     */
+    public String getCurrentPage() {
+        return currentPage;
+    }
+
+    /**
+     * setter for currentPage
+     * @param currentPage to set
+     */
+    public void setCurrentPage(String currentPage) {
+        this.currentPage = currentPage;
     }
 
     /**

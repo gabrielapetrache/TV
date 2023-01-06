@@ -1,6 +1,6 @@
 package input;
 
-import pages.Actions;
+import actions.Action;
 import users.User;
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Input {
     private ArrayList<User> users;
     private ArrayList<Movie> movies;
-    private ArrayList<Actions> actions;
+    private ArrayList<Action> actions;
 
     /**
      * Default constructor
@@ -52,7 +52,7 @@ public class Input {
      * getter for commands
      * @return commands
      */
-    public ArrayList<Actions> getActions() {
+    public ArrayList<Action> getActions() {
         return actions;
     }
 
@@ -60,7 +60,7 @@ public class Input {
      * setter for commands
      * @param commands commands
      */
-    public void setActions(final ArrayList<Actions> commands) {
+    public void setActions(final ArrayList<Action> commands) {
         this.actions = commands;
     }
 
