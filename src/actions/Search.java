@@ -13,9 +13,13 @@ import static platform.Platform.currentPage;
 
 public class Search implements Feature {
     User currentUser;
+    ArrayList<User> users;
+    ArrayList<Movie> movies;
 
-    public Search(User currentUser) {
+    public Search(User currentUser, ArrayList<User> users, ArrayList<Movie> movies) {
         this.currentUser = currentUser;
+        this.users = users;
+        this.movies = movies;
     }
 
     public void execute(Action currentAction, ArrayNode output, ArrayList<User> users) {
@@ -37,5 +41,13 @@ public class Search implements Feature {
             /* if the current page is not movies, the error is printed */
             output.add(printer.printError());
         }
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
     }
 }

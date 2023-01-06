@@ -14,10 +14,12 @@ import static platform.Platform.currentPage;
 
 public class Filter implements Feature {
     User currentUser;
+    ArrayList<User> users;
     ArrayList<Movie> movies;
 
-    public Filter(User currentUser, ArrayList<Movie> movies) {
+    public Filter(User currentUser, ArrayList<User> users, ArrayList<Movie> movies) {
         this.currentUser = currentUser;
+        this.users = users;
         this.movies = movies;
     }
 
@@ -53,5 +55,13 @@ public class Filter implements Feature {
             }
         }
         return currentMovieList;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
     }
 }

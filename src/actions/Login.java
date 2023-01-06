@@ -1,6 +1,7 @@
 package actions;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import input.Movie;
 import printer.OutputPrinter;
 import users.User;
 
@@ -12,9 +13,13 @@ import static platform.Platform.*;
 public class Login implements Feature {
 
     User currentUser;
+    ArrayList<User> users;
+    ArrayList<Movie> movies;
 
-    public Login(User currentUser) {
+    public Login(User currentUser, ArrayList<User> users, ArrayList<Movie> movies) {
         this.currentUser = currentUser;
+        this.users = users;
+        this.movies = movies;
     }
 
     public void execute(Action currentAction, ArrayNode output, ArrayList<User> users) {
@@ -47,5 +52,9 @@ public class Login implements Feature {
 
     public User getCurrentUser() {
         return currentUser;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
     }
 }

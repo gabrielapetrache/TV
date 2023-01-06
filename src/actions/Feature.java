@@ -7,4 +7,6 @@ import java.util.ArrayList;
 
 public interface Feature {
     void execute(Action currentAction, ArrayNode output, ArrayList<User> users);
+    ArrayList<User> getUsers();
+    User getCurrentUser();
 }

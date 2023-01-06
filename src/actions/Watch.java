@@ -13,9 +13,13 @@ import static platform.Platform.currentPage;
 
 public class Watch implements Feature {
     User currentUser;
+    ArrayList<User> users;
+    ArrayList<Movie> movies;
 
-    public Watch(User currentUser) {
+    public Watch(User currentUser, ArrayList<User> users, ArrayList<Movie> movies) {
         this.currentUser = currentUser;
+        this.users = users;
+        this.movies = movies;
     }
 
     public void execute(Action currentAction, ArrayNode output, ArrayList<User> users) {
@@ -44,5 +48,9 @@ public class Watch implements Feature {
 
     public User getCurrentUser() {
         return currentUser;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
     }
 }

@@ -13,9 +13,13 @@ import static platform.Platform.currentPage;
 
 public class Purchase implements Feature {
     User currentUser;
+    ArrayList<User> users;
+    ArrayList<Movie> movies;
 
-    public Purchase(User currentUser) {
+    public Purchase(User currentUser, ArrayList<User> users, ArrayList<Movie> movies) {
         this.currentUser = currentUser;
+        this.users = users;
+        this.movies = movies;
     }
 
     public void execute(Action currentAction, ArrayNode output, ArrayList<User> users) {
@@ -43,5 +47,9 @@ public class Purchase implements Feature {
 
     public User getCurrentUser() {
         return currentUser;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
     }
 }
