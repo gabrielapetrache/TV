@@ -1,5 +1,6 @@
-package actions;
+package actions.onpage;
 
+import actions.Action;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import input.Movie;
 import printer.OutputPrinter;
@@ -7,16 +8,16 @@ import users.User;
 
 import java.util.ArrayList;
 
-import static pages.PageStrings.MOVIES;
+import static pages.PageStrings.DETAILS;
 import static platform.Platform.currentMovieList;
 import static platform.Platform.currentPage;
 
-public class Search implements Feature {
+public class Rate implements Feature {
     User currentUser;
     ArrayList<User> users;
     ArrayList<Movie> movies;
 
-    public Search(User currentUser, ArrayList<User> users, ArrayList<Movie> movies) {
+    public Rate(User currentUser, ArrayList<User> users, ArrayList<Movie> movies) {
         this.currentUser = currentUser;
         this.users = users;
         this.movies = movies;
@@ -24,21 +25,21 @@ public class Search implements Feature {
 
     public void execute(Action currentAction, ArrayNode output, ArrayList<User> users) {
         OutputPrinter printer = OutputPrinter.getInstance();
-        if (currentPage.equals(MOVIES)) {
-            String startsWith = currentAction.getStartsWith();
-            ArrayList<Movie> copyMovieList = new ArrayList<>(currentMovieList);
-
-            for (Movie movie : copyMovieList) {
-                for (String ban : movie.getCountriesBanned()) {
-                    if (ban.equals(currentUser.getCredentials().getCountry())
-                            || !movie.getName().startsWith(startsWith)) {
-                        currentMovieList.remove(movie);
-                    }
-                }
+        if (currentPage.equals(DETAILS)) {
+            if (currentMovieList.isEmpty()) {
+                output.add(printer.printError());
+                return;
+            }
+            Movie toRate = currentMovieList.get(0);
+            int error = currentUser.rateMovie(toRate, currentAction.getRate());
+            if (error == -1) {
+                output.add(printer.printError());
+                return;
             }
             output.add(printer.printSuccess(currentUser, currentMovieList));
+
         } else {
-            /* if the current page is not movies, the error is printed */
+            /* if the current page is not upgrades, the error is printed */
             output.add(printer.printError());
         }
     }

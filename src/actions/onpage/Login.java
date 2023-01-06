@@ -1,5 +1,6 @@
-package actions;
+package actions.onpage;
 
+import actions.Action;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import input.Movie;
 import printer.OutputPrinter;

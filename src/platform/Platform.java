@@ -1,6 +1,8 @@
 package platform;
 
 import actions.*;
+import actions.onpage.Feature;
+import actions.onpage.FeatureFactory;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import input.Input;
 import input.Movie;

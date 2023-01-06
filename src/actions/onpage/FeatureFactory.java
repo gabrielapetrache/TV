@@ -1,4 +1,4 @@
-package actions;
+package actions.onpage;
 
 import input.Movie;
 import users.User;
