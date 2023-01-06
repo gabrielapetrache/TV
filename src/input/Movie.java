@@ -9,7 +9,7 @@ import java.util.Comparator;
 
 public class Movie implements Comparable<Movie> {
     private String name;
-    private int year;
+    private String year;
     private int duration;
     private ArrayList<String> genres;
     private ArrayList<String> actors;
@@ -22,7 +22,7 @@ public class Movie implements Comparable<Movie> {
     public Movie() {
     }
 
-    public Movie(final String name, final int year, final int duration,
+    public Movie(final String name, final String year, final int duration,
                  final ArrayList<String> genres, final ArrayList<String> actors,
                  final ArrayList<String> countriesBanned, final int numLikes,
                  final double rating, final int numRatings, final ArrayList<Double> ratings) {
@@ -45,6 +45,20 @@ public class Movie implements Comparable<Movie> {
     public void rateMovie(final double rating) {
         numRatings++;
         ratings.add(rating);
+        this.rating = 0;
+        for (Double rate : ratings) {
+            this.rating += rate;
+        }
+        this.rating /= numRatings;
+    }
+
+    /**
+     * Method to rate a movie that has already been rated
+     * @param rating to add
+     * @param index of the rating to be replaced
+     */
+    public void rerateMovie(final double rating, final int index) {
+        ratings.set(index, rating);
         this.rating = 0;
         for (Double rate : ratings) {
             this.rating += rate;
@@ -119,7 +133,7 @@ public class Movie implements Comparable<Movie> {
      * getter for year
      * @return year
      */
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
@@ -127,7 +141,7 @@ public class Movie implements Comparable<Movie> {
      * setter for year
      * @param year year
      */
-    public void setYear(final int year) {
+    public void setYear(final String year) {
         this.year = year;
     }
 

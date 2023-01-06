@@ -15,6 +15,7 @@ import static pages.PageStrings.PREMIUM;
 import static pages.PageStrings.PURCHASE;
 import static pages.PageStrings.WATCH;
 import static pages.PageStrings.LIKE;
+import static pages.PageStrings.SUBSCRIBE;
 
 public class FeatureFactory {
     private final User currentUser;
@@ -48,6 +49,7 @@ public class FeatureFactory {
             case WATCH -> new Watch(currentUser, users, movies);
             case LIKE -> new Like(currentUser, users, movies);
             case RATE -> new Rate(currentUser, users, movies);
+            case SUBSCRIBE -> new Subscribe(currentUser, users, movies);
             default -> null;
         };
     }

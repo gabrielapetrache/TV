@@ -16,12 +16,16 @@ public final class PageStrings {
     public static final String REGISTER = "register";
     public static final String CHANGE = "change page";
     public static final String ON = "on page";
+    public static final String DATABASE = "database";
     public static final String BUYTOKEN = "buy tokens";
     public static final String PREMIUM = "buy premium account";
     public static final String PURCHASE = "purchase";
     public static final String LIKE = "like";
     public static final String RATE = "rate";
     public static final String WATCH = "watch";
+    public static final String SUBSCRIBE = "subscribe";
+    public static final String ADD = "add";
+    public static final String DELETE = "delete";
     public static final int PREMIUMMOVIES = 15;
     public static final int PREMIUMCOST = 10;
     public static final int TOKENCOST = 2;

@@ -12,17 +12,15 @@ import users.User;
 
 import java.util.ArrayList;
 
-import static pages.PageStrings.HOMEPAGEONE;
-import static pages.PageStrings.CHANGE;
-import static pages.PageStrings.ON;
-import static pages.PageStrings.LOGOUT;
+import static pages.PageStrings.*;
 
 public class Platform {
     private ArrayList<User> users;
     private ArrayList<Movie> movies;
     private ArrayList<Action> actions;
-    public static String currentPage;
     private User currentUser;
+    public static String currentPage;
+    private String previousPage;
     public static ArrayList<Movie> currentMovieList;
     private final OutputPrinter printer = OutputPrinter.getInstance();
 
@@ -61,8 +59,12 @@ public class Platform {
                     if (newPage.equals(LOGOUT)) {
                         logoutCase(output);
                     } else {
+                        String page = currentPage;
                         currentPage = changePage.execute(currentPage, newPage, output, movies,
                                 currentUser, currentAction);
+                        if (!currentPage.equals(page)) {
+                            previousPage = page;
+                        }
                     }
                 }
                 case ON -> {
@@ -73,10 +75,52 @@ public class Platform {
                     currentUser = currentFeature.getCurrentUser();
                     users = currentFeature.getUsers();
                 }
-                default -> {
+                case DATABASE -> {
+                    String feature = currentAction.getFeature();
+                    if (feature.equals(ADD)) {
+                        Movie toAdd = currentAction.getAddedMovie();
+                        for (Movie movie : movies) {
+                            if (movie.getName().equals(toAdd.getName())) {
+                                output.add(printer.printError());
+                                break;
+                            }
+                        }
+                        movies.add(toAdd);
+                        for (User user : users) {
+                            user.addMovieNotification(toAdd);
+                        }
+                    } else if (feature.equals(DELETE)) {
+                        String toRemove = currentAction.getDeletedMovie();
+                        int error = 0;
+                        for (Movie movie : movies) {
+                            if (movie.getName().equals(toRemove)) {
+                                movies.remove(movie);
+                                currentMovieList.remove(movie);
+                                for (User user : users) {
+                                    user.removeMovie(toRemove);
+                                }
+                                error = 1;
+                                break;
+                            }
+                        }
+                        if (error == 0) {
+                            output.add(printer.printError());
+                        }
+                    }
                 }
+                case "back" -> {
+                    if (currentPage.equals(HOMEPAGEONE) || currentPage.equals(HOMEPAGETWO) || currentUser == null) {
+                        output.add(printer.printError());
+                    } else {
+                        currentPage = changePage.execute(currentPage, previousPage, output, movies,
+                                currentUser, currentAction);
+
+                    }
+                }
+                default -> { }
             }
         }
+        // add notifications to output
     }
 
     /**
@@ -93,5 +137,6 @@ public class Platform {
         currentMovieList = new ArrayList<>();
         currentUser = null;
         currentPage = HOMEPAGEONE;
+        previousPage = null;
     }
 }

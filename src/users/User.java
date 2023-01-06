@@ -20,6 +20,8 @@ public class User {
     private ArrayList<Movie> watchedMovies = new ArrayList<>();
     private ArrayList<Movie> likedMovies = new ArrayList<>();
     private ArrayList<Movie> ratedMovies = new ArrayList<>();
+    private ArrayList<Notification> notifications = new ArrayList<>();
+    private ArrayList<String> subscribedGenres = new ArrayList<>();
 
     /**
      * Default constructor
@@ -33,6 +35,8 @@ public class User {
         this.watchedMovies = new ArrayList<>();
         this.likedMovies = new ArrayList<>();
         this.ratedMovies = new ArrayList<>();
+        this.notifications = new ArrayList<>();
+        this.subscribedGenres = new ArrayList<>();
     }
 
     /**
@@ -74,6 +78,10 @@ public class User {
         if (movie == null) {
             return -1;
         }
+        if (purchasedMovies.contains(movie)) {
+            return -1;
+        }
+
         if (credentials.getAccountType().equals("premium")) {
             if (numFreePremiumMovies > 0) {
                 numFreePremiumMovies--;
@@ -99,7 +107,9 @@ public class User {
             return -1;
         }
         if (purchasedMovies.contains(movie)) {
-            watchedMovies.add(movie);
+            if (!watchedMovies.contains(movie)) {
+                watchedMovies.add(movie);
+            }
             return 0;
         }
         return -1;
@@ -112,6 +122,9 @@ public class User {
      */
     public int likeMovie(final Movie movie) {
         if (movie == null) {
+            return -1;
+        }
+        if (likedMovies.contains(movie)) {
             return -1;
         }
         if (purchasedMovies.contains(movie) && watchedMovies.contains(movie)) {
@@ -136,11 +149,67 @@ public class User {
             return -1;
         }
         if (purchasedMovies.contains(movie) && watchedMovies.contains(movie)) {
+            if (ratedMovies.contains(movie)) {
+                int index = ratedMovies.indexOf(movie);
+                movie.rerateMovie(rating, index);
+                return 0;
+            }
             movie.rateMovie(rating);
             ratedMovies.add(movie);
             return 0;
         }
         return -1;
+    }
+
+    /**
+     * Allows the user to add a genre to their subscription
+     * @param genre to add
+     */
+    public void addGenre(final String genre) {
+        if (!subscribedGenres.contains(genre)) {
+            subscribedGenres.add(genre);
+        }
+    }
+
+    /**
+     * Method that removes a movie from all the user's lists
+     * @param movie to remove
+     */
+    public void removeMovie(final String movie) {
+        Notification notification = new Notification(movie, "DELETE");
+        for (Movie m : purchasedMovies) {
+            if (m.getName().equals(movie)) {
+                purchasedMovies.remove(m);
+                notifications.add(notification);
+                if (credentials.getAccountType().equals("premium")) {
+                    numFreePremiumMovies++;
+                } else {
+                    tokensCount += TOKENCOST;
+                }
+            }
+        }
+        watchedMovies.removeIf(m -> m.getName().equals(movie));
+        likedMovies.removeIf(m -> m.getName().equals(movie));
+        ratedMovies.removeIf(m -> m.getName().equals(movie));
+    }
+
+    /**
+     * Method that notifies the user of a new movie in their subscribed genres
+     * @param movie to notify of
+     */
+    public void addMovieNotification(final Movie movie) {
+        Notification notification = new Notification(movie.getName(), "ADD");
+
+        for (String country : movie.getCountriesBanned()) {
+            if (credentials.getCountry().equals(country)) {
+                return;
+            }
+        }
+        for (String genres : movie.getGenres()) {
+            if (subscribedGenres.contains(genres)) {
+                notifications.add(notification);
+            }
+        }
     }
 
     /**
@@ -198,6 +267,17 @@ public class User {
                 list.add(node);
             }
             user.set("ratedMovies", list);
+        }
+
+        if (notifications == null) {
+            user.set("notifications", empty);
+        } else {
+            ArrayNode list = mapper.createArrayNode();
+            for (Notification notification : notifications) {
+                ObjectNode node = notification.printNotification();
+                list.add(node);
+            }
+            user.set("notifications", list);
         }
 
         return user;
@@ -313,6 +393,30 @@ public class User {
      */
     public void setRatedMovies(final ArrayList<Movie> ratedMovies) {
         this.ratedMovies = ratedMovies;
+    }
+
+    /**
+     * getter for notifications
+     * @return notifications
+     */
+    public ArrayList<Notification> getNotifications() {
+        return notifications;
+    }
+
+    /**
+     * setter for notifications
+     * @param notifications to set
+     */
+    public void setNotifications(final ArrayList<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    /**
+     * Getter for the user's subscribed genre
+     * @return the user's subscribed genre
+     */
+    public ArrayList<String> getSubscribedGenres() {
+        return subscribedGenres;
     }
 
     /**

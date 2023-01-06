@@ -1,6 +1,7 @@
 package actions;
 
 import filters.Filters;
+import input.Movie;
 import users.Credentials;
 
 public class Action {
@@ -13,6 +14,9 @@ public class Action {
     private String movie;
     private String startsWith;
     private Filters filters;
+    private String subscribedGenre;
+    private Movie addedMovie;
+    private String deletedMovie;
 
     /**
      * Default constructor
@@ -161,6 +165,54 @@ public class Action {
      */
     public void setRate(final int rate) {
         this.rate = rate;
+    }
+
+    /**
+     * getter for subscribedGenre
+     * @return subscribedGenre
+     */
+    public String getSubscribedGenre() {
+        return subscribedGenre;
+    }
+
+    /**
+     * setter for subscribedGenre
+     * @param subscribedGenre subscribedGenre
+     */
+    public void setSubscribedGenre(final String subscribedGenre) {
+        this.subscribedGenre = subscribedGenre;
+    }
+
+    /**
+     * getter for addedMovie
+     * @return addedMovie
+     */
+    public Movie getAddedMovie() {
+        return addedMovie;
+    }
+
+    /**
+     * setter for addedMovie
+     * @param addedMovie addedMovie
+     */
+    public void setAddedMovie(final Movie addedMovie) {
+        this.addedMovie = addedMovie;
+    }
+
+    /**
+     * getter for deletedMovie
+     * @return deletedMovie
+     */
+    public String getDeletedMovie() {
+        return deletedMovie;
+    }
+
+    /**
+     * setter for deletedMovie
+     * @param deletedMovie deletedMovie
+     */
+    public void setDeletedMovie(final String deletedMovie) {
+        this.deletedMovie = deletedMovie;
     }
 
     /**
