@@ -7,15 +7,19 @@ import input.Movie;
 
 import java.util.ArrayList;
 
+import static pages.PageStrings.MAXRATING;
+import static pages.PageStrings.PREMIUMMOVIES;
+import static pages.PageStrings.PREMIUMCOST;
+import static pages.PageStrings.TOKENCOST;
+
 public class User {
     private Credentials credentials;
     private int tokensCount = 0;
-    private int numFreePremiumMovies = 15;
+    private int numFreePremiumMovies = PREMIUMMOVIES;
     private ArrayList<Movie> purchasedMovies = new ArrayList<>();
     private ArrayList<Movie> watchedMovies = new ArrayList<>();
     private ArrayList<Movie> likedMovies = new ArrayList<>();
     private ArrayList<Movie> ratedMovies = new ArrayList<>();
-    private String currentPage;
 
     /**
      * Default constructor
@@ -52,9 +56,9 @@ public class User {
      * @return error status
      */
     public int buyPremium() {
-        if (tokensCount >= 10) {
-            tokensCount -= 10;
-            numFreePremiumMovies = 15;
+        if (tokensCount >= PREMIUMCOST) {
+            tokensCount -= PREMIUMCOST;
+            numFreePremiumMovies = PREMIUMMOVIES;
             credentials.setAccountType("premium");
             return 0;
         }
@@ -77,8 +81,8 @@ public class User {
                 return 0;
             }
         }
-        if (tokensCount >= 2) {
-            tokensCount -= 2;
+        if (tokensCount >= TOKENCOST) {
+            tokensCount -= TOKENCOST;
             purchasedMovies.add(movie);
             return 0;
         }
@@ -128,7 +132,7 @@ public class User {
         if (movie == null) {
             return -1;
         }
-        if (rating < 0 || rating > 5) {
+        if (rating < 0 || rating > MAXRATING) {
             return -1;
         }
         if (purchasedMovies.contains(movie) && watchedMovies.contains(movie)) {
@@ -309,22 +313,6 @@ public class User {
      */
     public void setRatedMovies(final ArrayList<Movie> ratedMovies) {
         this.ratedMovies = ratedMovies;
-    }
-
-    /**
-     * getter for currentPage
-     * @return currentPage
-     */
-    public String getCurrentPage() {
-        return currentPage;
-    }
-
-    /**
-     * setter for currentPage
-     * @param currentPage to set
-     */
-    public void setCurrentPage(String currentPage) {
-        this.currentPage = currentPage;
     }
 
     /**

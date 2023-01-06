@@ -1,6 +1,7 @@
 package platform;
 
-import actions.*;
+import actions.Action;
+import actions.ChangePage;
 import actions.onpage.Feature;
 import actions.onpage.FeatureFactory;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -11,7 +12,10 @@ import users.User;
 
 import java.util.ArrayList;
 
-import static pages.PageStrings.*;
+import static pages.PageStrings.HOMEPAGEONE;
+import static pages.PageStrings.CHANGE;
+import static pages.PageStrings.ON;
+import static pages.PageStrings.LOGOUT;
 
 public class Platform {
     private ArrayList<User> users;
@@ -76,11 +80,12 @@ public class Platform {
     }
 
     /**
-     * This method checks if the user is logged in, in case he wants to log out
+     * This method logs out the current user
      * @param output output in case of error
      */
-    private void logoutCase(ArrayNode output) {
+    private void logoutCase(final ArrayNode output) {
         if (currentUser == null) {
+            /* if the user is not logged in, he cannot log out */
             output.add(printer.printError());
             return;
         }

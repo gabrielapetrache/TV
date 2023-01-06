@@ -22,5 +22,9 @@ public final class PageStrings {
     public static final String LIKE = "like";
     public static final String RATE = "rate";
     public static final String WATCH = "watch";
+    public static final int PREMIUMMOVIES = 15;
+    public static final int PREMIUMCOST = 10;
+    public static final int TOKENCOST = 2;
+    public static final int MAXRATING = 5;
 
 }

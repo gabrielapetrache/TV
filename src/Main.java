@@ -7,9 +7,9 @@ import platform.Platform;
 import java.io.File;
 import java.io.IOException;
 
-public class Main {
+public final class Main {
 
-    private Main(){
+    private Main() {
     }
 
     /**
@@ -17,7 +17,7 @@ public class Main {
      * @param args from command line
      * @throws IOException in case of exceptions to reading / writing
      */
-    public final static void main(String[] args) throws IOException {
+    public static void main(final String[] args) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         Input input = objectMapper.readValue(new File(args[0]), Input.class);
 

@@ -7,8 +7,14 @@ import users.User;
 
 import java.util.ArrayList;
 
-import static pages.PageStrings.*;
-import static platform.Platform.*;
+import static pages.PageStrings.HOMEPAGEONE;
+import static pages.PageStrings.HOMEPAGETWO;
+import static pages.PageStrings.LOGIN;
+import static pages.PageStrings.UPGRADES;
+import static pages.PageStrings.REGISTER;
+import static pages.PageStrings.MOVIES;
+import static pages.PageStrings.DETAILS;
+import static platform.Platform.currentMovieList;
 
 public class ChangePage {
 
@@ -19,7 +25,7 @@ public class ChangePage {
      * @param toChange the page the user wants to go to
      * @return the page the user is currently on after the checks are done
      */
-    public String errorCheck(String currentPage, String toChange) {
+    public String errorCheck(final String currentPage, final String toChange) {
         switch (currentPage) {
             case HOMEPAGEONE:
                 if (!toChange.equals(LOGIN)  && !toChange.equals(REGISTER)) {
@@ -70,8 +76,9 @@ public class ChangePage {
      * @param output the output node
      * @return the page the user is on after the change
      */
-    public String execute(String currentPage, String toChange, ArrayNode output,
-                          ArrayList<Movie> movies, User currentUser, Action action) {
+    public String execute(final String currentPage, final String toChange, final ArrayNode output,
+                          final ArrayList<Movie> movies, final User currentUser,
+                          final Action action) {
         String page = errorCheck(currentPage, toChange);
         OutputPrinter printer = OutputPrinter.getInstance();
 
@@ -123,7 +130,7 @@ public class ChangePage {
      * @param currentUser the user that is currently logged in
      * @return the list of movies filtered by the user's country
      */
-    public ArrayList<Movie> filterMovies(ArrayList<Movie> movies, User currentUser) {
+    public ArrayList<Movie> filterMovies(final ArrayList<Movie> movies, final User currentUser) {
         ArrayList<Movie> currentMovieList = new ArrayList<>(movies);
         for (Movie movie : movies) {
             for (String ban : movie.getCountriesBanned()) {

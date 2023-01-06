@@ -9,22 +9,38 @@ import users.User;
 
 import java.util.ArrayList;
 
-import static pages.PageStrings.*;
+import static pages.PageStrings.HOMEPAGEONE;
+import static pages.PageStrings.HOMEPAGETWO;
+import static pages.PageStrings.REGISTER;
 import static platform.Platform.currentMovieList;
 import static platform.Platform.currentPage;
 
 public class Register implements Feature {
-    User currentUser;
-    ArrayList<User> users;
-    ArrayList<Movie> movies;
+    private User currentUser;
+    private final ArrayList<User> users;
+    private final ArrayList<Movie> movies;
 
-    public Register(User currentUser, ArrayList<User> users, ArrayList<Movie> movies) {
+    /**
+     * Constructor for Register
+     * @param currentUser the current user
+     * @param users the list of users
+     * @param movies the list of movies
+     */
+    public Register(final User currentUser, final ArrayList<User> users,
+                    final ArrayList<Movie> movies) {
         this.currentUser = currentUser;
         this.users = users;
         this.movies = movies;
     }
 
-    public void execute(Action currentAction, ArrayNode output, ArrayList<User> users) {
+    /**
+     * Executes the register action
+     * @param currentAction the current action
+     * @param output the output
+     * @param users the list of users
+     */
+    public void execute(final Action currentAction, final ArrayNode output,
+                        final ArrayList<User> users) {
         OutputPrinter printer = OutputPrinter.getInstance();
         if (currentPage.equals(REGISTER)) {
             String name = currentAction.getCredentials().getName();
@@ -53,10 +69,18 @@ public class Register implements Feature {
         }
     }
 
+    /**
+     * Getter for the current user
+     * @return the current user
+     */
     public User getCurrentUser() {
         return currentUser;
     }
 
+    /**
+     * Getter for the list of users
+     * @return the list of users
+     */
     public ArrayList<User> getUsers() {
         return users;
     }

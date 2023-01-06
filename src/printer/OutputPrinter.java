@@ -8,8 +8,8 @@ import users.User;
 
 import java.util.ArrayList;
 
-public class OutputPrinter {
-    private static final OutputPrinter instance = new OutputPrinter();
+public final class OutputPrinter {
+    private static final OutputPrinter INSTANCE = new OutputPrinter();
     private final ObjectMapper mapper = new ObjectMapper();
 
     /**
@@ -23,7 +23,7 @@ public class OutputPrinter {
      * @return instance of OutputPrinter
      */
     public static OutputPrinter getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     /**
@@ -45,7 +45,8 @@ public class OutputPrinter {
     /**
      * Method that prints the output in case of success
      */
-    public ObjectNode printSuccess(final User currentUser, final ArrayList<Movie> currentMovieList) {
+    public ObjectNode printSuccess(final User currentUser,
+                                   final ArrayList<Movie> currentMovieList) {
         ObjectNode node = mapper.createObjectNode();
         String empty = null;
 

@@ -13,17 +13,31 @@ import static platform.Platform.currentMovieList;
 import static platform.Platform.currentPage;
 
 public class Like implements Feature {
-    User currentUser;
-    ArrayList<User> users;
-    ArrayList<Movie> movies;
+    private final User currentUser;
+    private final ArrayList<User> users;
+    private final ArrayList<Movie> movies;
 
-    public Like(User currentUser, ArrayList<User> users, ArrayList<Movie> movies) {
+    /**
+     * Constructor for the Like class
+     * @param currentUser the current user
+     * @param users the list of users
+     * @param movies the list of movies
+     */
+    public Like(final User currentUser, final ArrayList<User> users,
+                final ArrayList<Movie> movies) {
         this.currentUser = currentUser;
         this.users = users;
         this.movies = movies;
     }
 
-    public void execute(Action currentAction, ArrayNode output, ArrayList<User> users) {
+    /**
+     * Executes the like action
+     * @param currentAction the current action
+     * @param output the output
+     * @param users the list of users
+     */
+    public void execute(final Action currentAction, final ArrayNode output,
+                        final ArrayList<User> users) {
         OutputPrinter printer = OutputPrinter.getInstance();
         if (currentPage.equals(DETAILS)) {
             if (currentMovieList.isEmpty()) {
@@ -43,10 +57,18 @@ public class Like implements Feature {
         }
     }
 
+    /**
+     * Getter for the current user
+     * @return the current user
+     */
     public User getCurrentUser() {
         return currentUser;
     }
 
+    /**
+     * Getter for the list of users
+     * @return the list of users
+     */
     public ArrayList<User> getUsers() {
         return users;
     }
