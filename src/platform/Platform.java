@@ -114,7 +114,7 @@ public class Platform {
                         }
                     }
                 }
-                case "back" -> {
+                case BACK -> {
                     if (currentPage.equals(HOMEPAGEONE) || currentPage.equals(HOMEPAGETWO)
                             || currentUser == null || previousPages.isEmpty()) {
                         output.add(printer.printError());
@@ -128,7 +128,6 @@ public class Platform {
                 default -> { }
             }
         }
-        // add notifications to output
         if (currentUser != null) {
             currentUser.addRecommendation(movies, output);
         }

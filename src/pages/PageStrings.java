@@ -26,6 +26,7 @@ public final class PageStrings {
     public static final String SUBSCRIBE = "subscribe";
     public static final String ADD = "add";
     public static final String DELETE = "delete";
+    public static final String BACK = "back";
     public static final int PREMIUMMOVIES = 15;
     public static final int PREMIUMCOST = 10;
     public static final int TOKENCOST = 2;
