@@ -61,6 +61,23 @@ public final class OutputPrinter {
     }
 
     /**
+     * Method that prints the recommended movies at the end of the program
+     */
+    public ObjectNode printEnd(final User currentUser) {
+        ObjectNode node = mapper.createObjectNode();
+        String empty = null;
+
+        node.put("error", empty);
+        node.put("currentMoviesList", empty);
+        if (currentUser != null) {
+            node.set("currentUser", currentUser.printUser());
+        } else {
+            node.put("currentUser", empty);
+        }
+        return node;
+    }
+
+    /**
      * Method that prints the movie list
      */
     public ArrayNode printMovieList(final ArrayList<Movie> currentMovieList) {

@@ -35,10 +35,13 @@ public class Subscribe implements Feature {
     public void execute(final Action currentAction, final ArrayNode output,
                         final ArrayList<User> users) {
         if (currentUser != null && currentPage.equals(DETAILS)) {
-            currentUser.addGenre(currentAction.getSubscribedGenre());
+            if (currentUser.getSubscribedGenres().contains(currentAction.getSubscribedGenre())) {
+                output.add(OutputPrinter.getInstance().printError());
+            } else {
+                currentUser.addGenre(currentAction.getSubscribedGenre());
+            }
         } else {
-            OutputPrinter printer = OutputPrinter.getInstance();
-            output.add(printer.printError());
+            output.add(OutputPrinter.getInstance().printError());
         }
     }
 

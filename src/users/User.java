@@ -4,8 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import input.Movie;
+import printer.OutputPrinter;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import static pages.PageStrings.MAXRATING;
 import static pages.PageStrings.PREMIUMMOVIES;
@@ -47,8 +48,7 @@ public class User {
     public int buyTokens(final int tokens) {
         int balance = Integer.parseInt(credentials.getBalance());
         if (balance >= tokens) {
-            balance -= tokens;
-            credentials.setBalance(String.valueOf(balance));
+            credentials.setBalance(String.valueOf(balance- tokens));
             tokensCount += tokens;
             return 0;
         }
@@ -60,11 +60,13 @@ public class User {
      * @return error status
      */
     public int buyPremium() {
-        if (tokensCount >= PREMIUMCOST) {
-            tokensCount -= PREMIUMCOST;
-            numFreePremiumMovies = PREMIUMMOVIES;
-            credentials.setAccountType("premium");
-            return 0;
+        if (credentials.getAccountType().equals("standard")) {
+            if (tokensCount >= PREMIUMCOST) {
+                tokensCount -= PREMIUMCOST;
+                numFreePremiumMovies = PREMIUMMOVIES;
+                credentials.setAccountType("premium");
+                return 0;
+            }
         }
         return -1;
     }
@@ -208,6 +210,63 @@ public class User {
         for (String genres : movie.getGenres()) {
             if (subscribedGenres.contains(genres)) {
                 notifications.add(notification);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Method that recommends a movie to the user at the end of the program
+     * @param movies movie list on the platform
+     * @param output array node
+     */
+    public void addRecommendation(final ArrayList<Movie> movies, final ArrayNode output) {
+        if (credentials.getAccountType().equals("premium")) {
+            String recommendation = "No recommendation";
+
+            if (likedMovies.isEmpty()) {
+                Notification notification = new Notification(recommendation, "Recommendation");
+                notifications.add(notification);
+                output.add(OutputPrinter.getInstance().printEnd(this));
+                return;
+            }
+
+            // calculate most liked genres
+            Map<String, Integer> genres = new HashMap<>();
+            for (Movie movie : likedMovies) {
+                for (String genre : movie.getGenres()) {
+                    if (genres.containsKey(genre)) {
+                        genres.put(genre, genres.get(genre) + 1);
+                    } else {
+                        genres.put(genre, 1);
+                    }
+                }
+            }
+
+            // sort genres by number of likes,descending, then by alphabetical order, ascending
+            List<Map.Entry<String, Integer>> sortedGenres = new ArrayList<>(genres.entrySet());
+            sortedGenres.sort((o1, o2) -> {
+                if (o1.getValue().equals(o2.getValue())) {
+                    return o1.getKey().compareTo(o2.getKey());
+                }
+                return o2.getValue().compareTo(o1.getValue());
+            });
+
+            ArrayList<Movie> moviesCopy = new ArrayList<>(movies);
+            moviesCopy.removeAll(purchasedMovies);
+            // sort movies by number of likes, descending
+            moviesCopy.sort((o1, o2) -> o2.getNumLikes() - o1.getNumLikes());
+            // get the first movie that has the most liked genre
+            for (Movie movie : moviesCopy) {
+                for (String genre : movie.getGenres()) {
+                    if (sortedGenres.get(0).getKey().equals(genre)) {
+                        recommendation = movie.getName();
+                        Notification notification = new Notification(recommendation, "Recommendation");
+                        notifications.add(notification);
+                        output.add(OutputPrinter.getInstance().printEnd(this));
+                        return;
+                    }
+                }
             }
         }
     }

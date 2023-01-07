@@ -123,6 +123,20 @@ public class ChangePage {
         return page;
     }
 
+    public String goBack(final String toChange, final ArrayNode output,
+                         final ArrayList<Movie> movies, final User currentUser) {
+        OutputPrinter printer = OutputPrinter.getInstance();
+
+        /* if the user went back to the movie page,
+           he will see all the movies available for his country */
+        if (toChange.equals(MOVIES)) {
+            currentMovieList = new ArrayList<>(filterMovies(movies, currentUser));
+            output.add(printer.printSuccess(currentUser, currentMovieList));
+        }
+
+        return toChange;
+    }
+
     /**
      * Method that filters the movies based on the user's country
      *
@@ -142,4 +156,8 @@ public class ChangePage {
         return currentMovieList;
     }
 
+    // Method that goes back to the previous page
+    public String goBack(final String currentPage) {
+        return null;
+    }
 }

@@ -20,7 +20,7 @@ public class Platform {
     private ArrayList<Action> actions;
     private User currentUser;
     public static String currentPage;
-    private String previousPage;
+    private ArrayList<String> previousPages = new ArrayList<>();
     public static ArrayList<Movie> currentMovieList;
     private final OutputPrinter printer = OutputPrinter.getInstance();
 
@@ -63,7 +63,7 @@ public class Platform {
                         currentPage = changePage.execute(currentPage, newPage, output, movies,
                                 currentUser, currentAction);
                         if (!currentPage.equals(page)) {
-                            previousPage = page;
+                            previousPages.add(page);
                         }
                     }
                 }
@@ -79,16 +79,22 @@ public class Platform {
                     String feature = currentAction.getFeature();
                     if (feature.equals(ADD)) {
                         Movie toAdd = currentAction.getAddedMovie();
+                        int error = 0;
                         for (Movie movie : movies) {
                             if (movie.getName().equals(toAdd.getName())) {
-                                output.add(printer.printError());
+                                error = 1;
                                 break;
                             }
                         }
-                        movies.add(toAdd);
-                        for (User user : users) {
-                            user.addMovieNotification(toAdd);
+                        if (error == 0) {
+                            movies.add(toAdd);
+                            for (User user : users) {
+                                user.addMovieNotification(toAdd);
+                            }
+                        } else {
+                            output.add(printer.printError());
                         }
+
                     } else if (feature.equals(DELETE)) {
                         String toRemove = currentAction.getDeletedMovie();
                         int error = 0;
@@ -109,18 +115,23 @@ public class Platform {
                     }
                 }
                 case "back" -> {
-                    if (currentPage.equals(HOMEPAGEONE) || currentPage.equals(HOMEPAGETWO) || currentUser == null) {
+                    if (currentPage.equals(HOMEPAGEONE) || currentPage.equals(HOMEPAGETWO)
+                            || currentUser == null || previousPages.isEmpty()) {
                         output.add(printer.printError());
                     } else {
-                        currentPage = changePage.execute(currentPage, previousPage, output, movies,
-                                currentUser, currentAction);
-
+                        currentPage = changePage.goBack(
+                                previousPages.get(previousPages.size() - 1), output, movies,
+                                currentUser);
+                        previousPages.remove(previousPages.size() - 1);
                     }
                 }
                 default -> { }
             }
         }
         // add notifications to output
+        if (currentUser != null) {
+            currentUser.addRecommendation(movies, output);
+        }
     }
 
     /**
@@ -137,6 +148,6 @@ public class Platform {
         currentMovieList = new ArrayList<>();
         currentUser = null;
         currentPage = HOMEPAGEONE;
-        previousPage = null;
+        previousPages = new ArrayList<>();
     }
 }
