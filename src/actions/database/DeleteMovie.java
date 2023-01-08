@@ -1,7 +1,5 @@
 package actions.database;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import input.Action;
 import input.Movie;
 import users.User;
 
@@ -10,10 +8,16 @@ import java.util.ArrayList;
 public class DeleteMovie implements Command {
     private ChangeDatabase changeDatabase;
 
+    /**
+     * Constructor for DeleteMovie
+     */
     public DeleteMovie(final ChangeDatabase changeDatabase) {
         this.changeDatabase = changeDatabase;
     }
 
+    /**
+     * Method that executes the command
+     */
     public void execute() {
         changeDatabase.delete();
     }

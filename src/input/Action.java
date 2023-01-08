@@ -1,7 +1,6 @@
 package input;
 
 import filters.Filters;
-import input.Movie;
 import users.Credentials;
 
 public class Action {

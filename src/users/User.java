@@ -48,7 +48,7 @@ public class User {
     public int buyTokens(final int tokens) {
         int balance = Integer.parseInt(credentials.getBalance());
         if (balance >= tokens) {
-            credentials.setBalance(String.valueOf(balance- tokens));
+            credentials.setBalance(String.valueOf(balance - tokens));
             tokensCount += tokens;
             return 0;
         }
@@ -261,7 +261,8 @@ public class User {
                 for (String genre : movie.getGenres()) {
                     if (sortedGenres.get(0).getKey().equals(genre)) {
                         recommendation = movie.getName();
-                        Notification notification = new Notification(recommendation, "Recommendation");
+                        Notification notification = new Notification(recommendation,
+                                "Recommendation");
                         notifications.add(notification);
                         output.add(OutputPrinter.getInstance().printEnd(this));
                         return;

@@ -124,6 +124,14 @@ public class ChangePage {
         return page;
     }
 
+    /**
+     * Method that goes back to the previous page
+     * @param toChange the page the user is currently on
+     * @param output the output node
+     * @param movies the list of movies
+     * @param currentUser the user that wants to change the page
+     * @return the page the user is on after the change
+     */
     public String goBack(final String toChange, final ArrayNode output,
                          final ArrayList<Movie> movies, final User currentUser) {
         OutputPrinter printer = OutputPrinter.getInstance();
@@ -155,10 +163,5 @@ public class ChangePage {
             }
         }
         return currentMovieList;
-    }
-
-    // Method that goes back to the previous page
-    public String goBack(final String currentPage) {
-        return null;
     }
 }

@@ -29,6 +29,9 @@ public class ChangeDatabase {
         this.output = output;
     }
 
+    /**
+     * Method that adds a movie to the database
+     */
     public void add() {
         Movie toAdd = currentAction.getAddedMovie();
         int error = 0;
@@ -48,6 +51,9 @@ public class ChangeDatabase {
         }
     }
 
+    /**
+     * Method that deletes a movie from the database
+     */
     public void delete() {
         String toRemove = currentAction.getDeletedMovie();
         int error = 0;
