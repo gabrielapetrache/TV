@@ -3,7 +3,7 @@ package platform;
 import actions.database.AddMovie;
 import actions.database.ChangeDatabase;
 import actions.database.DeleteMovie;
-import actions.database.DatabaseModifier;
+import actions.database.Modifier;
 import input.Action;
 import actions.ChangePage;
 import actions.onpage.Feature;
@@ -85,8 +85,8 @@ public class Platform {
                             movies, users, currentMovieList);
                     AddMovie addMovie = new AddMovie(changeDatabase);
                     DeleteMovie deleteMovie = new DeleteMovie(changeDatabase);
-                    DatabaseModifier databaseModifier = new DatabaseModifier();
 
+                    Modifier databaseModifier = new Modifier();
                     if (feature.equals(ADD)) {
                         databaseModifier.setCommand(addMovie);
                     } else if (feature.equals(DELETE)) {

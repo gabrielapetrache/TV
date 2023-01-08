@@ -11,7 +11,7 @@ import java.util.*;
 import static pages.PageStrings.MAXRATING;
 import static pages.PageStrings.PREMIUMMOVIES;
 import static pages.PageStrings.PREMIUMCOST;
-import static pages.PageStrings.TOKENCOST;
+import static pages.PageStrings.MOVIECOST;
 
 public class User {
     private Credentials credentials;
@@ -91,8 +91,8 @@ public class User {
                 return 0;
             }
         }
-        if (tokensCount >= TOKENCOST) {
-            tokensCount -= TOKENCOST;
+        if (tokensCount >= MOVIECOST) {
+            tokensCount -= MOVIECOST;
             purchasedMovies.add(movie);
             return 0;
         }
@@ -186,7 +186,7 @@ public class User {
                 if (credentials.getAccountType().equals("premium")) {
                     numFreePremiumMovies++;
                 } else {
-                    tokensCount += TOKENCOST;
+                    tokensCount += MOVIECOST;
                 }
             }
         }
