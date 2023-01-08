@@ -1,6 +1,7 @@
 package actions;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import input.Action;
 import input.Movie;
 import printer.OutputPrinter;
 import users.User;

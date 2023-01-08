@@ -1,6 +1,6 @@
 package actions.onpage;
 
-import actions.Action;
+import input.Action;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import filters.Filters;
 import input.Movie;

@@ -1,6 +1,5 @@
 package input;
 
-import actions.Action;
 import users.User;
 
 import java.util.ArrayList;

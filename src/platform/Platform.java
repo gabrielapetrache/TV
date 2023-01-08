@@ -1,6 +1,10 @@
 package platform;
 
-import actions.Action;
+import actions.database.AddMovie;
+import actions.database.ChangeDatabase;
+import actions.database.DeleteMovie;
+import actions.database.DatabaseModifier;
+import input.Action;
 import actions.ChangePage;
 import actions.onpage.Feature;
 import actions.onpage.FeatureFactory;
@@ -77,42 +81,22 @@ public class Platform {
                 }
                 case DATABASE -> {
                     String feature = currentAction.getFeature();
-                    if (feature.equals(ADD)) {
-                        Movie toAdd = currentAction.getAddedMovie();
-                        int error = 0;
-                        for (Movie movie : movies) {
-                            if (movie.getName().equals(toAdd.getName())) {
-                                error = 1;
-                                break;
-                            }
-                        }
-                        if (error == 0) {
-                            movies.add(toAdd);
-                            for (User user : users) {
-                                user.addMovieNotification(toAdd);
-                            }
-                        } else {
-                            output.add(printer.printError());
-                        }
+                    ChangeDatabase changeDatabase = new ChangeDatabase(currentAction, output,
+                            movies, users, currentMovieList);
+                    AddMovie addMovie = new AddMovie(changeDatabase);
+                    DeleteMovie deleteMovie = new DeleteMovie(changeDatabase);
+                    DatabaseModifier databaseModifier = new DatabaseModifier();
 
+                    if (feature.equals(ADD)) {
+                        databaseModifier.setCommand(addMovie);
                     } else if (feature.equals(DELETE)) {
-                        String toRemove = currentAction.getDeletedMovie();
-                        int error = 0;
-                        for (Movie movie : movies) {
-                            if (movie.getName().equals(toRemove)) {
-                                movies.remove(movie);
-                                currentMovieList.remove(movie);
-                                for (User user : users) {
-                                    user.removeMovie(toRemove);
-                                }
-                                error = 1;
-                                break;
-                            }
-                        }
-                        if (error == 0) {
-                            output.add(printer.printError());
-                        }
+                        databaseModifier.setCommand(deleteMovie);
                     }
+
+                    databaseModifier.executeCommand();
+                    currentMovieList = databaseModifier.getCurrentMovieList();
+                    movies = databaseModifier.getMovies();
+                    users = databaseModifier.getUsers();
                 }
                 case BACK -> {
                     if (currentPage.equals(HOMEPAGEONE) || currentPage.equals(HOMEPAGETWO)

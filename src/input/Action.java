@@ -1,4 +1,4 @@
-package actions;
+package input;
 
 import filters.Filters;
 import input.Movie;
