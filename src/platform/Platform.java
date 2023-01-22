@@ -3,7 +3,7 @@ package platform;
 import actions.database.AddMovie;
 import actions.database.ChangeDatabase;
 import actions.database.DeleteMovie;
-import actions.database.Modifier;
+import actions.database.Invoker;
 import input.Action;
 import actions.ChangePage;
 import actions.onpage.Feature;
@@ -86,17 +86,17 @@ public class Platform {
                     AddMovie addMovie = new AddMovie(changeDatabase);
                     DeleteMovie deleteMovie = new DeleteMovie(changeDatabase);
 
-                    Modifier databaseModifier = new Modifier();
+                    Invoker databaseInvoker = new Invoker();
                     if (feature.equals(ADD)) {
-                        databaseModifier.setCommand(addMovie);
+                        databaseInvoker.setCommand(addMovie);
                     } else if (feature.equals(DELETE)) {
-                        databaseModifier.setCommand(deleteMovie);
+                        databaseInvoker.setCommand(deleteMovie);
                     }
 
-                    databaseModifier.executeCommand();
-                    currentMovieList = databaseModifier.getCurrentMovieList();
-                    movies = databaseModifier.getMovies();
-                    users = databaseModifier.getUsers();
+                    databaseInvoker.executeCommand();
+                    currentMovieList = databaseInvoker.getCurrentMovieList();
+                    movies = databaseInvoker.getMovies();
+                    users = databaseInvoker.getUsers();
                 }
                 case BACK -> {
                     if (currentPage.equals(HOMEPAGEONE) || currentPage.equals(HOMEPAGETWO)
