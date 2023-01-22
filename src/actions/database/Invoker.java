@@ -5,13 +5,13 @@ import users.User;
 
 import java.util.ArrayList;
 
-public class Modifier {
+public class Invoker {
     private Command command;
 
     /**
      * Constructor for Invoker
      */
-    public Modifier() {
+    public Invoker() {
     }
 
     /**
