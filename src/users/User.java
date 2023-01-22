@@ -231,7 +231,7 @@ public class User {
                 return;
             }
 
-            // calculate most liked genres
+            /* calculate most liked genres */
             Map<String, Integer> genres = new HashMap<>();
             for (Movie movie : likedMovies) {
                 for (String genre : movie.getGenres()) {
@@ -243,7 +243,7 @@ public class User {
                 }
             }
 
-            // sort genres by number of likes,descending, then by alphabetical order, ascending
+            /* sort genres by number of likes, descending, then by alphabetical order, ascending */
             List<Map.Entry<String, Integer>> sortedGenres = new ArrayList<>(genres.entrySet());
             sortedGenres.sort((o1, o2) -> {
                 if (o1.getValue().equals(o2.getValue())) {
@@ -254,9 +254,11 @@ public class User {
 
             ArrayList<Movie> moviesCopy = new ArrayList<>(movies);
             moviesCopy.removeAll(purchasedMovies);
-            // sort movies by number of likes, descending
+
+            /* sort movies by number of likes, descending */
             moviesCopy.sort((o1, o2) -> o2.getNumLikes() - o1.getNumLikes());
-            // get the first movie that has the most liked genre
+
+            /* get the first movie that has the most liked genre */
             for (Movie movie : moviesCopy) {
                 for (String genre : movie.getGenres()) {
                     if (sortedGenres.get(0).getKey().equals(genre)) {
